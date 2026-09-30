@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>青山市公安局</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
+    background:#f0f2f5;
+    color:#333;
+    font-size:14px;
+  }
+
+  /* ===== 顶部条 ===== */
+  .topbar {
+    background:#16263c;
+    color:#a8bcd4;
+    font-size:12px;
+    padding:6px 0;
+  }
+  .topbar .inner {
+    max-width:1200px; margin:0 auto; padding:0 20px;
+    display:flex; justify-content:space-between;
+  }
+  .topbar a { color:#a8bcd4; text-decoration:none; margin-left:16px; }
+  .topbar a:hover { color:#fff; }
+
+  /* ===== 页头 ===== */
+  header {
+    background:linear-gradient(135deg, #0b2245 0%, #143a6b 55%, #1d5091 100%);
+    color:#fff;
+    position:relative;
+    overflow:hidden;
+  }
+  header::after {
+    content:"";
+    position:absolute; right:-60px; top:-60px;
+    width:320px; height:320px;
+    border:2px solid rgba(255,255,255,.08);
+    border-radius:50%;
+  }
+  header::before {
+    content:"";
+    position:absolute; right:60px; bottom:-120px;
+    width:240px; height:240px;
+    border:2px solid rgba(255,255,255,.06);
+    border-radius:50%;
+  }
+  .header-inner {
+    max-width:1200px; margin:0 auto; padding:26px 20px;
+    display:flex; align-items:center; gap:18px;
+    position:relative; z-index:2;
+  }
+  .emblem {
+    width:64px; height:64px; flex-shrink:0;
+    background:radial-gradient(circle at 50% 40%, #ffd76e 0%, #e0a92c 60%, #b8860b 100%);
+    border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    box-shadow:0 0 0 3px rgba(255,215,110,.25);
+    font-size:30px;
+  }
+  .title-block h1 {
+    font-size:32px; letter-spacing:6px; font-weight:700;
+    text-shadow:0 2px 8px rgba(0,0,0,.35);
+  }
+  .title-block .sub {
+    font-size:12px; letter-spacing:3px;
+    color:#9dc0ea; margin-top:6px;
+    text-transform:uppercase;
+  }
+  .header-right {
+    margin-left:auto; text-align:right;
+    font-size:12px; color:#9dc0ea; line-height:1.9;
+    position:relative; z-index:2;
+  }
+  .header-right strong { color:#ffd76e; font-size:15px; }
+
+  /* ===== 导航 ===== */
+  nav {
+    background:#0f2a4d;
+    border-top:1px solid rgba(255,255,255,.1);
+    position:sticky; top:0; z-index:50;
+    box-shadow:0 2px 10px rgba(0,0,0,.15);
+  }
+  nav .inner {
+    max-width:1200px; margin:0 auto; padding:0 20px;
+    display:flex;
+  }
+  nav a {
+    color:#d6e4f5; text-decoration:none;
+    padding:15px 26px; font-size:15px;
+    position:relative; transition:.2s;
+  }
+  nav a:hover, nav a.active {
+    background:#1d5091; color:#fff;
+  }
+  nav a.active::after {
+    content:""; position:absolute; left:26px; right:26px; bottom:0;
+    height:3px; background:#ffd76e;
+  }
+
+  /* ===== 公告条 ===== */
+  .notice {
+    max-width:1200px; margin:16px auto 0; padding:0 20px;
+  }
+  .notice-box {
+    background:#fff; border:1px solid #e3e8ef; border-radius:4px;
+    display:flex; align-items:center;
+    padding:10px 16px; gap:12px;
+    box-shadow:0 1px 4px rgba(0,0,0,.04);
+  }
+  .notice-tag {
+    background:#c62828; color:#fff;
+    font-size:12px; padding:3px 10px; border-radius:3px;
+    flex-shrink:0; letter-spacing:1px;
+  }
+  .notice-scroll {
+    flex:1; overflow:hidden; height:22px; position:relative;
+  }
+  .notice-scroll span {
+    display:block; line-height:22px;
+    animation: scrollUp 14s linear infinite;
+    color:#333;
+  }
+  @keyframes scrollUp {
+    0%,15%   { transform: translateY(0); }
+    45%,60%  { transform: translateY(-22px); }
+    90%,100% { transform: translateY(-44px); }
+  }
+
+  /* ===== 主布局 ===== */
+  .container {
+    max-width:1200px; margin:0 auto; padding:18px 20px 40px;
+    display:grid;
+    grid-template-columns: 1fr 320px;
+    gap:18px;
+  }
+
+  .card {
+    background:#fff; border:1px solid #e3e8ef; border-radius:4px;
+    box-shadow:0 1px 4px rgba(0,0,0,.04);
+    margin-bottom:18px;
+  }
+  .card-head {
+    padding:14px 18px;
+    border-bottom:1px solid #eef1f6;
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  .card-head h2 {
+    font-size:17px; font-weight:600; color:#143a6b;
+    padding-left:12px; position:relative;
+  }
+  .card-head h2::before {
+    content:""; position:absolute; left:0; top:50%;
+    transform:translateY(-50%);
+    width:4px; height:16px; background:#1d5091; border-radius:2px;
+  }
+  .more { font-size:12px; color:#8a97a8; text-decoration:none; }
+  .more:hover { color:#1d5091; }
+
+  /* ===== 新闻列表 ===== */
+  .news-feature {
+    padding:18px;
+    display:flex; gap:16px;
+    border-bottom:1px dashed #eef1f6;
+  }
+  .news-feature .thumb {
+    width:180px; height:112px; flex-shrink:0;
+    background:linear-gradient(135deg,#1d5091,#0b2245);
+    border-radius:3px;
+    display:flex; align-items:center; justify-content:center;
+    color:rgba(255,255,255,.35); font-size:12px; letter-spacing:2px;
+  }
+  .news-feature h3 {
+    font-size:17px; color:#143a6b; margin-bottom:10px; line-height:1.5;
+  }
+  .news-feature p {
+    font-size:13px; color:#6b7a8d; line-height:1.8;
+  }
+  .news-feature .date {
+    margin-top:10px; font-size:12px; color:#a0adbd;
+  }
+
+  .news-list { padding:6px 18px 14px; }
+  .news-list li {
+    list-style:none;
+    display:flex; align-items:center;
+    padding:11px 0;
+    border-bottom:1px dashed #eef1f6;
+    font-size:14px;
+  }
+  .news-list li:last-child { border-bottom:none; }
+  .news-list li::before {
+    content:""; width:5px; height:5px;
+    background:#1d5091; border-radius:50%;
+    margin-right:12px; flex-shrink:0;
+  }
+  .news-list a {
+    color:#333; text-decoration:none; flex:1;
+    overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
+  }
+  .news-list a:hover { color:#1d5091; }
+  .news-list .date { color:#a0adbd; font-size:12px; margin-left:14px; }
+  .news-list .tag-new {
+    background:#e8f0fb; color:#1d5091;
+    font-size:11px; padding:1px 6px; border-radius:2px;
+    margin-left:10px;
+  }
+
+  /* ===== 办事服务网格 ===== */
+  .service-grid {
+    display:grid; grid-template-columns:repeat(4,1fr);
+    gap:1px; background:#eef1f6;
+  }
+  .service-item {
+    background:#fff; padding:22px 10px;
+    text-align:center; text-decoration:none; color:#333;
+    transition:.2s;
+  }
+  .service-item:hover { background:#f5f9ff; }
+  .service-item .ico {
+    width:42px; height:42px; margin:0 auto 10px;
+    background:#e8f0fb; border-radius:8px;
+    display:flex; align-items:center; justify-content:center;
+    font-size:20px; color:#1d5091;
+  }
+  .service-item span { font-size:13px; }
+
+  /* ===== 右栏 ===== */
+  .side-card .card-head { padding:12px 16px; }
+
+  .quick-links { padding:14px 16px; }
+  .quick-links a {
+    display:flex; align-items:center;
+    padding:10px 12px; margin-bottom:8px;
+    background:#f7f9fc; border-radius:3px;
+    color:#334; text-decoration:none; font-size:13px;
+    border-left:3px solid #1d5091;
+    transition:.2s;
+  }
+  .quick-links a:hover {
+    background:#e8f0fb; transform:translateX(3px);
+  }
+  .quick-links a .arrow { margin-left:auto; color:#b0bccb; }
+
+  /* 数据面板 */
+  .stats { padding:16px; }
+  .stat-row {
+    display:flex; justify-content:space-between; align-items:baseline;
+    padding:11px 0; border-bottom:1px dashed #eef1f6;
+  }
+  .stat-row:last-child { border-bottom:none; }
+  .stat-row .label { color:#6b7a8d; font-size:13px; }
+  .stat-row .value {
+    color:#1d5091; font-size:20px; font-weight:700;
+    font-family:Consolas, monospace;
+  }
+  .stat-row .value small { font-size:12px; font-weight:400; color:#8a97a8; margin-left:3px; }
+
+  /* 警情通报 */
+  .alarm-list { padding:8px 16px 14px; }
+  .alarm-list li {
+    list-style:none; font-size:13px;
+    padding:9px 0; border-bottom:1px dashed #eef1f6;
+    color:#4a5a6e; line-height:1.6;
+  }
+  .alarm-list li:last-child { border-bottom:none; }
+  .alarm-list .lv {
+    display:inline-block; font-size:11px;
+    padding:1px 6px; border-radius:2px; margin-right:8px;
+    vertical-align:1px;
+  }
+  .lv-1 { background:#fdeaea; color:#c62828; }
+  .lv-2 { background:#fff5e0; color:#b8860b; }
+  .lv-3 { background:#eaf4ea; color:#2e7d32; }
+
+  /* ===== 网上110 悬浮按钮 ===== */
+  .float-110 {
+    position:fixed; right:26px; bottom:60px;
+    width:96px; height:96px; border-radius:50%;
+    background:linear-gradient(145deg,#d32f2f,#a01c1c);
+    color:#fff; text-decoration:none;
+    display:flex; flex-direction:column;
+    align-items:center; justify-content:center;
+    box-shadow:0 6px 20px rgba(180,30,30,.45);
+    z-index:90; transition:.25s;
+    border:3px solid rgba(255,255,255,.25);
+  }
+  .float-110:hover { transform:scale(1.07); }
+  .float-110 .num {
+    font-size:26px; font-weight:800; letter-spacing:1px;
+    font-family:Arial, sans-serif; line-height:1;
+  }
+  .float-110 .txt { font-size:11px; margin-top:5px; letter-spacing:1px; }
+
+  /* ===== 页脚 ===== */
+  footer {
+    background:#0f2136; color:#7d92ab;
+    font-size:12px; padding:28px 0 20px;
+    border-top:3px solid #1d5091;
+  }
+  .footer-inner {
+    max-width:1200px; margin:0 auto; padding:0 20px;
+  }
+  .footer-links {
+    display:flex; flex-wrap:wrap; gap:8px 22px;
+    padding-bottom:16px; margin-bottom:16px;
+    border-bottom:1px solid rgba(255,255,255,.08);
+  }
+  .footer-links a { color:#7d92ab; text-decoration:none; }
+  .footer-links a:hover { color:#c8d9ee; }
+  .footer-info { line-height:2; }
+  .footer-info strong { color:#a8bcd4; }
+
+  @media (max-width:900px) {
+    .container { grid-template-columns:1fr; }
+    .service-grid { grid-template-columns:repeat(2,1fr); }
+    .news-feature { flex-direction:column; }
+    .news-feature .thumb { width:100%; }
+  }
+</style>
+</head>
+<body>
+
+<!-- 顶部条 -->
+<div class="topbar">
+  <div class="inner">
+    <div>青山市公安局 · 官方网站（政务类）</div>
+    <div>
+      <a href="#">无障碍浏览</a>
+      <a href="#">繁體</a>
+      <a href="#">EN</a>
+      <a href="#">登录</a>
+    </div>
+  </div>
+</div>
+
+<!-- 页头 -->
+<header>
+  <div class="header-inner">
+    <div class="emblem">🛡</div>
+    <div class="title-block">
+      <h1>青山市公安局</h1>
+      <div class="sub">QINGSHAN MUNICIPAL PUBLIC SECURITY BUREAU</div>
+    </div>
+    <div class="header-right">
+      24小时报警服务电话<br>
+      <strong>110</strong> &nbsp;|&nbsp; 监督投诉 <strong>12389</strong>
+    </div>
+  </div>
+</header>
+
+<!-- 导航 -->
+<nav>
+  <div class="inner">
+    <a href="#" class="active">首页</a>
+    <a href="#">政务公开</a>
+    <a href="#">警务资讯</a>
+    <a href="#">办事服务</a>
+    <a href="#">警民互动</a>
+    <a href="#">法律法规</a>
+    <a href="#">网上110</a>
+  </div>
+</nav>
+
+<!-- 公告条 -->
+<div class="notice">
+  <div class="notice-box">
+    <span class="notice-tag">通知公告</span>
+    <div class="notice-scroll">
+      <span>
+        关于青山市户籍业务系统升级维护的公告 &nbsp;·&nbsp;
+        2026年第二季度全市道路交通违法处理窗口调整通知 &nbsp;·&nbsp;
+        关于开展夏季社会治安专项整治行动的通告
+      </span>
+    </div>
+  </div>
+</div>
+
+<!-- 主体 -->
+<div class="container">
+
+  <!-- 左栏 -->
+  <div class="main-col">
+
+    <!-- 要闻 -->
+    <div class="card">
+      <div class="card-head">
+        <h2>警务要闻</h2>
+        <a href="#" class="more">更多 &gt;</a>
+      </div>
+
+      <div class="news-feature">
+        <div class="thumb">新闻配图</div>
+        <div>
+          <h3>青山市公安局召开夏季治安打击整治行动部署会</h3>
+          <p>7月14日，青山市公安局召开专题会议，部署开展为期三个月的夏季治安打击整治行动，重点围绕夜市商圈、交通枢纽、城乡结合部等区域，强化巡逻防控与隐患排查，全力维护全市社会治安大局稳定。</p>
+          <div class="date">2026-07-14 &nbsp;|&nbsp; 来源：市局办公室</div>
+        </div>
+      </div>
+
+      <ul class="news-list">
+        <li>
+          <a href="#">青山交警开展"一盔一带"安全守护集中宣传日活动</a>
+          <span class="tag-new">新</span>
+          <span class="date">07-13</span>
+        </li>
+        <li>
+          <a href="#">我市公安机关破获一起跨省电信网络诈骗案 抓获嫌疑人17名</a>
+          <span class="date">07-12</span>
+        </li>
+        <li>
+          <a href="#">城东派出所民警紧急救助突发疾病群众获赠锦旗</a>
+          <span class="date">07-11</span>
+        </li>
+        <li>
+          <a href="#">全市公安机关开展执法规范化建设专题培训</a>
+          <span class="date">07-10</span>
+        </li>
+        <li>
+          <a href="#">青山市禁毒办走进校园开展青少年毒品预防教育</a>
+          <span class="date">07-09</span>
+        </li>
+        <li>
+          <a href="#">关于优化调整市区部分路段交通组织的通告</a>
+          <span class="date">07-08</span>
+        </li>
+      </ul>
+    </div>
+
+    <!-- 办事服务 -->
+    <div class="card">
+      <div class="card-head">
+        <h2>办事服务</h2>
+        <a href="#" class="more">全部服务 &gt;</a>
+      </div>
+      <div class="service-grid">
+        <a href="#" class="service-item">
+          <div class="ico">🪪</div><span>户籍办理</span>
+        </a>
+        <a href="#" class="service-item">
+          <div class="ico">🛂</div><span>出入境业务</span>
+        </a>
+        <a href="#" class="service-item">
+          <div class="ico">🚗</div><span>交管业务</span>
+        </a>
+        <a href="#" class="service-item">
+          <div class="ico">📄</div><span>无犯罪记录证明</span>
+        </a>
+        <a href="#" class="service-item">
+          <div class="ico">🏢</div><span>居住证办理</span>
+        </a>
+        <a href="#" class="service-item">
+          <div class="ico">🔍</div><span>案件进度查询</span>
+        </a>
+        <a href="#" class="service-item">
+          <div class="ico">🚨</div><span>网上报警</span>
+        </a>
+        <a href="#" class="service-item">
+          <div class="ico">💬</div><span>投诉建议</span>
+        </a>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- 右栏 -->
+  <div class="side-col">
+
+    <!-- 快捷入口 -->
+    <div class="card side-card">
+      <div class="card-head"><h2>便民快捷</h2></div>
+      <div class="quick-links">
+        <a href="#">派出所辖区查询 <span class="arrow">›</span></a>
+        <a href="#">身份证办理进度 <span class="arrow">›</span></a>
+        <a href="#">机动车违法查询 <span class="arrow">›</span></a>
+        <a href="#">走失人员协查 <span class="arrow">›</span></a>
+        <a href="#">失物招领平台 <span class="arrow">›</span></a>
+      </div>
+    </div>
+
+    <!-- 警情数据 -->
+    <div class="card side-card">
+      <div class="card-head"><h2>全市警情概况</h2></div>
+      <div class="stats">
+        <div class="stat-row">
+          <span class="label">今日接警</span>
+          <span class="value">1,284 <small>起</small></span>
+        </div>
+        <div class="stat-row">
+          <span class="label">有效报警</span>
+          <span class="value">967 <small>起</small></span>
+        </div>
+        <div class="stat-row">
+          <span class="label">刑事案件</span>
+          <span class="value">12 <small>起</small></span>
+        </div>
+        <div class="stat-row">
+          <span class="label">求助类警情</span>
+          <span class="value">318 <small>起</small></span>
+        </div>
+        <div class="stat-row">
+          <span class="label">在线警力</span>
+          <span class="value">2,146 <small>人</small></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 警情通报 -->
+    <div class="card side-card">
+      <div class="card-head"><h2>警情通报</h2></div>
+      <ul class="alarm-list">
+        <li><span class="lv lv-1">紧急</span>解放路商圈发生一起扒窃案，嫌疑人已控制</li>
+        <li><span class="lv lv-2">提示</span>近期冒充客服诈骗警情上升，请注意防范</li>
+        <li><span class="lv lv-3">常态</span>青河桥路段早高峰车流量较大，建议错峰出行</li>
+        <li><span class="lv lv-2">提示</span>夏季涉水安全提醒：请勿在无救生员水域游泳</li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+<!-- 网上110 悬浮 -->
+<a href="#" class="float-110">
+  <span class="num">110</span>
+  <span class="txt">网上报警</span>
+</a>
+
+<!-- 页脚 -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-links">
+      <a href="#">关于我们</a>
+      <a href="#">网站地图</a>
+      <a href="#">联系方式</a>
+      <a href="#">隐私声明</a>
+      <a href="#">网站纠错</a>
+      <a href="#">友情链接</a>
+    </div>
+    <div class="footer-info">
+      <strong>主办单位：</strong>青山市公安局 &nbsp;|&nbsp;
+      <strong>地址：</strong>青山市青河区平安大道 1 号 &nbsp;|&nbsp;
+      <strong>邮编：</strong>310000<br>
+      <strong>报警电话：</strong>110 &nbsp;|&nbsp;
+      <strong>监督投诉：</strong>12389 &nbsp;|&nbsp;
+      <strong>政务服务热线：</strong>12345<br>
+      网站标识码：0000000000 &nbsp;|&nbsp;
+      备案号：青山ICP备00000000号 &nbsp;|&nbsp;
+      公安机关备案号：00000000000000<br>
+      <span style="color:#4a5f78;">本站为虚构世界观设定，与任何现实机构无关</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
