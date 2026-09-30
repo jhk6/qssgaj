@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>案件进度查询 - 青山市公安局</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family:"Microsoft YaHei","PingFang SC",sans-serif;
+    background:#f0f2f5; color:#333; font-size:14px;
+  }
+
+  /* 顶部条 */
+  .topbar { background:#16263c; color:#a8bcd4; font-size:12px; padding:6px 0; }
+  .topbar .inner { max-width:1200px; margin:0 auto; padding:0 20px; display:flex; justify-content:space-between; }
+  .topbar a { color:#a8bcd4; text-decoration:none; margin-left:16px; }
+  .topbar a:hover { color:#fff; }
+
+  /* 页头 */
+  header {
+    background:linear-gradient(135deg,#0b2245 0%,#143a6b 55%,#1d5091 100%);
+    color:#fff; position:relative; overflow:hidden;
+  }
+  header::after {
+    content:""; position:absolute; right:-60px; top:-60px;
+    width:320px; height:320px; border:2px solid rgba(255,255,255,.08); border-radius:50%;
+  }
+  .header-inner { max-width:1200px; margin:0 auto; padding:22px 20px; display:flex; align-items:center; gap:18px; position:relative; z-index:2; }
+  .emblem {
+    width:56px; height:56px; flex-shrink:0;
+    background:radial-gradient(circle at 50% 40%,#ffd76e 0%,#e0a92c 60%,#b8860b 100%);
+    border-radius:50%; display:flex; align-items:center; justify-content:center;
+    box-shadow:0 0 0 3px rgba(255,215,110,.25); font-size:26px;
+  }
+  .title-block h1 { font-size:26px; letter-spacing:5px; font-weight:700; text-shadow:0 2px 8px rgba(0,0,0,.35); }
+  .title-block .sub { font-size:11px; letter-spacing:3px; color:#9dc0ea; margin-top:5px; }
+  .header-right { margin-left:auto; text-align:right; font-size:12px; color:#9dc0ea; line-height:1.9; position:relative; z-index:2; }
+  .header-right strong { color:#ffd76e; font-size:15px; }
+
+  /* 导航 */
+  nav { background:#0f2a4d; border-top:1px solid rgba(255,255,255,.1); position:sticky; top:0; z-index:50; box-shadow:0 2px 10px rgba(0,0,0,.15); }
+  nav .inner { max-width:1200px; margin:0 auto; padding:0 20px; display:flex; }
+  nav a { color:#d6e4f5; text-decoration:none; padding:15px 26px; font-size:15px; position:relative; transition:.2s; }
+  nav a:hover, nav a.active { background:#1d5091; color:#fff; }
+  nav a.active::after { content:""; position:absolute; left:26px; right:26px; bottom:0; height:3px; background:#ffd76e; }
+
+  /* 面包屑 */
+  .crumb { max-width:1000px; margin:14px auto 0; padding:0 20px; font-size:12px; color:#8a97a8; }
+  .crumb a { color:#8a97a8; text-decoration:none; }
+  .crumb a:hover { color:#1d5091; }
+  .crumb span { margin:0 6px; }
+
+  /* 主容器 */
+  .wrap { max-width:1000px; margin:0 auto; padding:16px 20px 50px; }
+  .card { background:#fff; border:1px solid #e3e8ef; border-radius:4px; box-shadow:0 1px 4px rgba(0,0,0,.04); margin-bottom:18px; }
+  .card-head { padding:14px 20px; border-bottom:1px solid #eef1f6; display:flex; align-items:center; justify-content:space-between; }
+  .card-head h2 { font-size:17px; font-weight:600; color:#143a6b; padding-left:12px; position:relative; }
+  .card-head h2::before { content:""; position:absolute; left:0; top:50%; transform:translateY(-50%); width:4px; height:16px; background:#1d5091; border-radius:2px; }
+
+  /* 查询表单 */
+  .tabs { display:flex; border-bottom:1px solid #eef1f6; background:#fafbfd; }
+  .tabs button { flex:0 0 auto; border:none; background:transparent; padding:14px 32px; font-size:14px; font-family:inherit; color:#6b7a8d; cursor:pointer; position:relative; transition:.2s; }
+  .tabs button:hover { color:#1d5091; }
+  .tabs button.on { color:#1d5091; font-weight:600; background:#fff; }
+  .tabs button.on::after { content:""; position:absolute; left:20px; right:20px; bottom:-1px; height:2px; background:#1d5091; }
+
+  .form-body { padding:26px 32px 10px; }
+  .field { margin-bottom:20px; }
+  .field label { display:block; font-size:13px; color:#4a5a6e; margin-bottom:8px; font-weight:600; }
+  .field label em { color:#c62828; font-style:normal; margin-left:3px; }
+  .field input[type=text] { width:100%; height:44px; padding:0 14px; border:1px solid #d5dce6; border-radius:3px; font-size:14px; font-family:inherit; color:#333; outline:none; transition:.2s; background:#fff; }
+  .field input[type=text]:focus { border-color:#1d5091; box-shadow:0 0 0 3px rgba(29,80,145,.1); }
+  .field .hint { font-size:12px; color:#a0adbd; margin-top:7px; line-height:1.6; }
+
+  .captcha-row { display:flex; gap:12px; align-items:center; }
+  .captcha-row input { flex:1; }
+  .captcha { width:112px; height:44px; flex-shrink:0; border:1px solid #d5dce6; border-radius:3px; background:linear-gradient(135deg,#eef3fa,#dfe9f5); display:flex; align-items:center; justify-content:center; gap:3px; cursor:pointer; user-select:none; font-family:Georgia,serif; font-size:21px; font-weight:700; letter-spacing:1px; color:#143a6b; font-style:italic; }
+  .captcha span:nth-child(1){ transform:rotate(-12deg); }
+  .captcha span:nth-child(2){ transform:rotate(8deg); color:#1d5091; }
+  .captcha span:nth-child(3){ transform:rotate(-6deg); color:#b8860b; }
+  .captcha span:nth-child(4){ transform:rotate(14deg); }
+  .captcha:active { opacity:.75; }
+
+  .form-actions { padding:4px 32px 26px; display:flex; align-items:center; gap:14px; }
+  .btn-search { height:44px; padding:0 46px; background:linear-gradient(180deg,#1d5091,#143a6b); color:#fff; border:none; border-radius:3px; font-size:15px; font-family:inherit; letter-spacing:2px; cursor:pointer; transition:.2s; box-shadow:0 2px 6px rgba(20,58,107,.3); }
+  .btn-search:hover { background:linear-gradient(180deg,#24609f,#1a4680); }
+  .btn-search:active { transform:translateY(1px); }
+  .btn-reset { height:44px; padding:0 30px; background:#fff; color:#4a5a6e; border:1px solid #d5dce6; border-radius:3px; font-size:14px; font-family:inherit; cursor:pointer; transition:.2s; }
+  .btn-reset:hover { border-color:#1d5091; color:#1d5091; }
+
+  .tip-box { margin:0 32px 24px; padding:12px 16px; background:#fffbf0; border:1px dashed #e6c96a; border-radius:3px; font-size:12px; color:#8a6d1f; line-height:1.9; }
+  .tip-box b { color:#b8860b; }
+
+  /* 结果区 */
+  #resultArea { display:none; }
+  .case-card { border:1px solid #e3e8ef; border-radius:4px; margin:0 0 18px; overflow:hidden; }
+  .case-card:last-child { margin-bottom:0; }
+  .case-top { padding:14px 20px; background:#f7f9fc; border-bottom:1px solid #eef1f6; display:flex; align-items:center; gap:12px; flex-wrap:wrap; }
+  .case-top .no { font-size:15px; font-weight:700; color:#143a6b; font-family:Consolas,"Courier New",monospace; letter-spacing:.5px; }
+  .st { font-size:12px; padding:3px 12px; border-radius:20px; font-weight:600; letter-spacing:1px; }
+  .st-active { background:#e8f0fb; color:#1d5091; }
+  .st-move   { background:#fff5e0; color:#b8860b; }
+  .st-done   { background:#eaf4ea; color:#2e7d32; }
+
+  .case-info { display:grid; grid-template-columns:1fr 1fr; gap:0; padding:6px 20px 16px; }
+  .info-row { display:flex; padding:9px 0; font-size:13px; border-bottom:1px dashed #f0f3f8; }
+  .info-row .k { color:#8a97a8; width:92px; flex-shrink:0; }
+  .info-row .v { color:#334; flex:1; word-break:break-all; }
+
+  .progress-block { padding:6px 20px 22px; }
+  .progress-block h4 { font-size:13px; color:#4a5a6e; margin:10px 0 16px; padding-left:10px; border-left:3px solid #1d5091; font-weight:600; }
+  .timeline { position:relative; padding-left:26px; }
+  .timeline::before { content:""; position:absolute; left:5px; top:6px; bottom:6px; width:2px; background:#e6ebf3; }
+  .tl-item { position:relative; padding-bottom:20px; }
+  .tl-item:last-child { padding-bottom:2px; }
+  .tl-item::before { content:""; position:absolute; left:-26px; top:4px; width:12px; height:12px; border-radius:50%; background:#fff; border:2px solid #b9c7d9; box-sizing:border-box; }
+  .tl-item.current::before { background:#ffd76e; border-color:#e0a92c; box-shadow:0 0 0 4px rgba(255,215,110,.28); }
+  .tl-date { font-size:12px; color:#a0adbd; font-family:Consolas,monospace; margin-bottom:4px; }
+  .tl-title { font-size:14px; color:#143a6b; font-weight:600; margin-bottom:4px; }
+  .tl-desc { font-size:13px; color:#6b7a8d; line-height:1.75; }
+  .tl-item.current .tl-title { color:#b8860b; }
+
+  .empty { padding:60px 20px; text-align:center; color:#a0adbd; }
+  .empty .ico { font-size:42px; margin-bottom:14px; opacity:.5; }
+  .empty .t { font-size:15px; color:#6b7a8d; margin-bottom:8px; }
+  .empty .d { font-size:13px; line-height:1.8; }
+
+  .alert { padding:12px 18px; border-radius:3px; font-size:13px; margin-bottom:18px; display:flex; align-items:center; gap:10px; }
+  .alert-err { background:#fdeaea; color:#c62828; border:1px solid #f5c6c6; }
+
+  .loading { padding:50px; text-align:center; color:#8a97a8; font-size:14px; }
+  .loading .dot { display:inline-block; width:6px; height:6px; border-radius:50%; background:#1d5091; margin-right:5px; animation:blink 1s infinite alternate; }
+  .loading .dot:nth-child(2){ animation-delay:.2s; }
+  .loading .dot:nth-child(3){ animation-delay:.4s; }
+  @keyframes blink { from{opacity:.2} to{opacity:1} }
+
+  .result-bar { padding:10px 20px; background:#eef5fd; border-bottom:1px solid #dbe7f5; font-size:13px; color:#1d5091; }
+  .result-bar b { color:#143a6b; }
+
+  /* 页脚 */
+  footer { background:#0f2136; color:#7d92ab; font-size:12px; padding:26px 0 20px; border-top:3px solid #1d5091; }
+  .footer-inner { max-width:1200px; margin:0 auto; padding:0 20px; }
+  .footer-links { display:flex; flex-wrap:wrap; gap:8px 22px; padding-bottom:14px; margin-bottom:14px; border-bottom:1px solid rgba(255,255,255,.08); }
+  .footer-links a { color:#7d92ab; text-decoration:none; }
+  .footer-links a:hover { color:#c8d9ee; }
+  .footer-info { line-height:2; }
+  .footer-info strong { color:#a8bcd4; }
+
+  @media (max-width:760px) {
+    .case-info { grid-template-columns:1fr; }
+    .form-body, .form-actions, .tip-box { padding-left:18px; padding-right:18px; }
+    .tip-box { margin-left:18px; margin-right:18px; }
+    nav a { padding:13px 14px; font-size:14px; }
+    .header-right { display:none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- 顶部条 -->
+<div class="topbar">
+  <div class="inner">
+    <div>青山市公安局 · 官方网站（政务类）</div>
+    <div>
+      <a href="#">无障碍浏览</a>
+      <a href="#">繁體</a>
+      <a href="#">EN</a>
+      <a href="#">登录</a>
+    </div>
+  </div>
+</div>
+
+<!-- 页头 -->
+<header>
+  <div class="header-inner">
+    <div class="emblem">🛡</div>
+    <div class="title-block">
+      <h1>青山市公安局</h1>
+      <div class="sub">QINGSHAN MUNICIPAL PUBLIC SECURITY BUREAU</div>
+    </div>
+    <div class="header-right">
+      24小时报警服务电话<br>
+      <strong>110</strong> &nbsp;|&nbsp; 监督投诉 <strong>12389</strong>
+    </div>
+  </div>
+</header>
+
+<!-- 导航 -->
+<nav>
+  <div class="inner">
+    <a href="index.html">首页</a>
+    <a href="#">政务公开</a>
+    <a href="#">警务资讯</a>
+    <a href="#" class="active">办事服务</a>
+    <a href="#">警民互动</a>
+    <a href="#">法律法规</a>
+    <a href="#">网上110</a>
+  </div>
+</nav>
+
+<!-- 面包屑 -->
+<div class="crumb">
+  <a href="index.html">首页</a><span>&gt;</span>
+  <a href="#">办事服务</a><span>&gt;</span>
+  案件进度查询
+</div>
+
+<!-- 主体 -->
+<div class="wrap">
+
+  <div class="card">
+    <div class="card-head">
+      <h2>案件进度查询</h2>
+      <span style="font-size:12px;color:#a0adbd;">数据更新时间：2026-10-01 08:00</span>
+    </div>
+
+    <!-- 查询方式切换 -->
+    <div class="tabs">
+      <button type="button" class="on" data-mode="no">按案件编号查询</button>
+      <button type="button" data-mode="id">按身份证号查询</button>
+    </div>
+
+    <!-- 表单 -->
+    <div class="form-body">
+      <div class="field">
+        <label id="inputLabel">案件编号<em>*</em></label>
+        <input type="text" id="queryInput" placeholder="请输入案件编号，例如：QS20260714001" autocomplete="off">
+        <div class="hint" id="inputHint">
+          案件编号可在《受案回执》或《立案告知书》右上角查看，格式为 QS + 年月日 + 序号。
+        </div>
+      </div>
+
+      <div class="field">
+        <label>验证码<em>*</em></label>
+        <div class="captcha-row">
+          <input type="text" id="captchaInput" placeholder="请输入右侧4位字符（不区分大小写）" maxlength="4" autocomplete="off">
+          <div class="captcha" id="captchaBox" title="点击刷新验证码"></div>
+        </div>
+        <div class="hint">看不清？点击验证码图片可刷新。</div>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button type="button" class="btn-search" id="btnSearch">查 询</button>
+      <button type="button" class="btn-reset" id="btnReset">重 置</button>
+    </div>
+
+    <!-- 演示提示（游戏内可见） -->
+    <div class="tip-box">
+      <b>【游戏内演示提示】</b>可用案件编号：
+      <b>QS20260714001</b>（侦查中）、
+      <b>QS20260601007</b>（已移送审查起诉）、
+      <b>QS20260425033</b>（已结案）；
+      或用身份证号 <b>330102199003074512</b> 查询名下关联案件。
+    </div>
+  </div>
+
+  <!-- 结果区 -->
+  <div id="resultArea"></div>
+
+</div>
+
+<!-- 页脚 -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-links">
+      <a href="#">关于我们</a>
+      <a href="#">网站地图</a>
+      <a href="#">联系方式</a>
+      <a href="#">隐私声明</a>
+      <a href="#">网站纠错</a>
+      <a href="#">友情链接</a>
+    </div>
+    <div class="footer-info">
+      <strong>主办单位：</strong>青山市公安局 &nbsp;|&nbsp;
+      <strong>地址：</strong>青山市青河区平安大道 1 号 &nbsp;|&nbsp;
+      <strong>邮编：</strong>310000<br>
+      <strong>报警电话：</strong>110 &nbsp;|&nbsp;
+      <strong>监督投诉：</strong>12389 &nbsp;|&nbsp;
+      <strong>政务服务热线：</strong>12345<br>
+      网站标识码：0000000000 &nbsp;|&nbsp;
+      备案号：青山ICP备00000000号 &nbsp;|&nbsp;
+      公安机关备案号：00000000000000<br>
+      <span style="color:#4a5f78;">本站为虚构世界观设定，与任何现实机构无关</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ============ 模拟案件数据 ============ */
+const CASES = [
+  {
+    id: "QS20260714001",
+    no: "青公（刑）立字〔2026〕第 0714 号",
+    category: "刑事案件",
+    charge: "盗窃",
+    status: "侦查中",
+    statusClass: "st-active",
+    unit: "青山市公安局青河分局刑侦大队",
+    officer: "李国强、王振",
+    place: "青河区解放路 128 号",
+    filed: "2026-07-14",
+    idcards: ["330102199003074512"],
+    progress: [
+      { date:"2026-07-14 09:20", title:"受理报案", desc:"群众报警称其经营的便利店财物被盗，接警后民警赶赴现场处置。" },
+      { date:"2026-07-14 10:05", title:"立案侦查", desc:"经初查符合立案条件，依法立为刑事案件并开展侦查。" },
+      { date:"2026-07-16 15:30", title:"现场勘查完成", desc:"技术部门完成现场勘查，提取指纹及鞋印痕迹共 4 处。" },
+      { date:"2026-07-20 11:00", title:"调取监控", desc:"调取案发地及周边 12 处公共监控，锁定嫌疑人体貌特征。" },
+      { date:"2026-07-28 09:15", title:"案件仍在进一步侦查中", desc:"已对嫌疑对象开展排查比对，案件办理期限依法延长。" }
+    ]
+  },
+  {
+    id: "QS20260601007",
+    no: "青公（刑）诉字〔2026〕第 0601 号",
+    category: "刑事案件",
+    charge: "电信网络诈骗",
+    status: "已移送审查起诉",
+    statusClass: "st-move",
+    unit: "青山市公安局刑侦支队反诈中心",
+    officer: "陈锐、赵敏",
+    place: "跨区域（涉青河区、城南区）",
+    filed: "2026-06-01",
+    idcards: ["330102199003074512"],
+    progress: [
+      { date:"2026-06-01 08:40", title:"受理报案", desc:"被害人报案称在网上被以“刷单返利”名义骗取资金。" },
+      { date:"2026-06-03 14:20", title:"立案侦查", desc:"经资金流向分析，依法立案并成立专案组。" },
+      { date:"2026-06-18 20:10", title:"抓获犯罪嫌疑人", desc:"专案组在外省抓获涉案嫌疑人 6 名，冻结涉案账户 21 个。" },
+      { date:"2026-07-05 16:00", title:"侦查终结", desc:"案件事实清楚、证据确实充分，侦查终结并制作起诉意见书。" },
+      { date:"2026-07-12 10:30", title:"移送审查起诉", desc:"案件已依法移送青山市人民检察院审查起诉。" }
+    ]
+  },
+  {
+    id: "QS20260425033",
+    no: "青公（治）结字〔2026〕第 0425 号",
+    category: "治安案件",
+    charge: "殴打他人",
+    status: "已结案",
+    statusClass: "st-done",
+    unit: "青山市公安局城南分局城西派出所",
+    officer: "周海",
+    place: "城南区文昌街夜市",
+    filed: "2026-04-25",
+    idcards: ["330102198812153347"],
+    progress: [
+      { date:"2026-04-25 22:15", title:"受理报案", desc:"群众报警称在夜市发生肢体冲突，民警到场控制现场。" },
+      { date:"2026-04-26 09:00", title:"调查取证", desc:"对双方当事人及 3 名证人进行询问，调取现场监控。" },
+      { date:"2026-04-28 15:40", title:"组织调解", desc:"经双方自愿申请，派出所组织治安调解并达成协议。" },
+      { date:"2026-04-30 11:00", title:"案件办结", desc:"调解协议履行完毕，案件依法办结并归档。" }
+    ]
+  }
+];
+
+/* ============ 验证码 ============ */
+const CHARS = "ABCDEFGHJKLMNPQRSTUVWXY3456789";
+let captchaCode = "";
+
+function refreshCaptcha() {
+  captchaCode = "";
+  for (let i = 0; i < 4; i++) {
+    captchaCode += CHARS[Math.floor(Math.random() * CHARS.length)];
+  }
+  document.getElementById("captchaBox").innerHTML =
+    captchaCode.split("").map(c => `<span>${c}</span>`).join("");
+}
+
+/* ============ Tab 切换 ============ */
+let mode = "no";
+const tabs = document.querySelectorAll(".tabs button");
+tabs.forEach(btn => {
+  btn.addEventListener("click", () => {
+    tabs.forEach(b => b.classList.remove("on"));
+    btn.classList.add("on");
+    mode = btn.dataset.mode;
+    const input = document.getElementById("queryInput");
+    if (mode === "no") {
+      document.getElementById("inputLabel").innerHTML = "案件编号<em>*</em>";
+      input.placeholder = "请输入案件编号，例如：QS20260714001";
+      document.getElementById("inputHint").textContent =
+        "案件编号可在《受案回执》或《立案告知书》右上角查看，格式为 QS + 年月日 + 序号。";
+    } else {
+      document.getElementById("inputLabel").innerHTML = "身份证号<em>*</em>";
+      input.placeholder = "请输入 18 位居民身份证号码";
+      document.getElementById("inputHint").textContent =
+        "仅可查询本人名下关联案件。为保护隐私，查询结果中的个人信息将作脱敏处理。";
+    }
+    input.value = "";
+    input.focus();
+    document.getElementById("resultArea").style.display = "none";
+    document.getElementById("resultArea").innerHTML = "";
+  });
+});
+
+/* ============ 渲染 ============ */
+function esc(s) {
+  return String(s).replace(/[&<>"']/g, m => ({
+    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+  }[m]));
+}
+
+function renderCase(c) {
+  const tl = c.progress.map((p, i) => {
+    const isLast = i === c.progress.length - 1;
+    return `<div class="tl-item${isLast ? " current" : ""}">
+      <div class="tl-date">${esc(p.date)}</div>
+      <div class="tl-title">${esc(p.title)}</div>
+      <div class="tl-desc">${esc(p.desc)}</div>
+    </div>`;
+  }).join("");
+
+  return `<div class="case-card">
+    <div class="case-top">
+      <span class="no">${esc(c.no)}</span>
+      <span class="st ${c.statusClass}">${esc(c.status)}</span>
+    </div>
+    <div class="case-info">
+      <div class="info-row"><span class="k">案件编号</span><span class="v">${esc(c.id)}</span></div>
+      <div class="info-row"><span class="k">案件类别</span><span class="v">${esc(c.category)}</span></div>
+      <div class="info-row"><span class="k">案　　由</span><span class="v">${esc(c.charge)}</span></div>
+      <div class="info-row"><span class="k">受案日期</span><span class="v">${esc(c.filed)}</span></div>
+      <div class="info-row"><span class="k">受理单位</span><span class="v">${esc(c.unit)}</span></div>
+      <div class="info-row"><span class="k">办案民警</span><span class="v">${esc(c.officer)}</span></div>
+      <div class="info-row"><span class="k">涉案地点</span><span class="v">${esc(c.place)}</span></div>
+      <div class="info-row"><span class="k">当前状态</span><span class="v">${esc(c.status)}</span></div>
+    </div>
+    <div class="progress-block">
+      <h4>办理进度</h4>
+      <div class="timeline">${tl}</div>
+    </div>
+  </div>`;
+}
+
+function showEmpty(title, desc) {
+  return `<div class="card"><div class="empty">
+    <div class="ico">🗂</div>
+    <div class="t">${esc(title)}</div>
+    <div class="d">${desc}</div>
+  </div></div>`;
+}
+
+/* ============ 查询逻辑 ============ */
+function doSearch() {
+  const area = document.getElementById("resultArea");
+  const input = document.getElementById("queryInput");
+  const capInput = document.getElementById("captchaInput");
+  const val = input.value.trim();
+  const cap = capInput.value.trim();
+
+  if (!cap) {
+    area.style.display = "block";
+    area.innerHTML = `<div class="alert alert-err">⚠ 请输入验证码。</div>`;
+    return;
+  }
+  if (cap.toUpperCase() !== captchaCode.toUpperCase()) {
+    area.style.display = "block";
+    area.innerHTML = `<div class="alert alert-err">⚠ 验证码错误，请重新输入。</div>`;
+    refreshCaptcha();
+    capInput.value = "";
+    return;
+  }
+
+  if (!val) {
+    area.style.display = "block";
+    area.innerHTML = `<div class="alert alert-err">⚠ 请输入${mode === "no" ? "案件编号" : "身份证号"}后再查询。</div>`;
+    return;
+  }
+
+  if (mode === "id" && !/^\d{15}$|^\d{17}[\dXx]$/.test(val)) {
+    area.style.display = "block";
+    area.innerHTML = `<div class="alert alert-err">⚠ 身份证号格式不正确，请检查后重新输入。</div>`;
+    return;
+  }
+
+  area.style.display = "block";
+  area.innerHTML = `<div class="card"><div class="loading">
+    <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+    &nbsp;正在查询，请稍候…
+  </div></div>`;
+
+  setTimeout(() => {
+    let list = [];
+    if (mode === "no") {
+      const key = val.replace(/\s/g, "").toUpperCase();
+      list = CASES.filter(c => c.id.toUpperCase() === key);
+    } else {
+      const key = val.toUpperCase();
+      list = CASES.filter(c => c.idcards.some(n => n.toUpperCase() === key));
+    }
+
+    if (list.length === 0) {
+      area.innerHTML = showEmpty(
+        "未查询到相关案件记录",
+        mode === "no"
+          ? "请核对案件编号是否输入正确，或前往受理单位窗口咨询。"
+          : "该身份证号名下暂无关联案件，或案件信息尚未同步至本系统。"
+      );
+      refreshCaptcha();
+      capInput.value = "";
+      return;
+    }
+
+    const bar = `<div class="card">
+      <div class="result-bar">
+        共查询到 <b>${list.length}</b> 条案件记录 &nbsp;|&nbsp;
+        查询方式：<b>${mode === "no" ? "案件编号" : "身份证号"}</b> &nbsp;|&nbsp;
+        查询时间：${new Date().toLocaleString("zh-CN", { hour12: false })}
+      </div>
+      <div style="padding:18px 20px 20px;">${list.map(renderCase).join("")}</div>
+    </div>`;
+    area.innerHTML = bar;
+
+    refreshCaptcha();
+    capInput.value = "";
+  }, 700);
+}
+
+/* ============ 事件绑定 ============ */
+document.getElementById("captchaBox").addEventListener("click", refreshCaptcha);
+document.getElementById("btnSearch").addEventListener("click", doSearch);
+
+document.getElementById("btnReset").addEventListener("click", () => {
+  document.getElementById("queryInput").value = "";
+  document.getElementById("captchaInput").value = "";
+  const area = document.getElementById("resultArea");
+  area.style.display = "none";
+  area.innerHTML = "";
+  refreshCaptcha();
+  document.getElementById("queryInput").focus();
+});
+
+document.getElementById("queryInput").addEventListener("keydown", e => {
+  if (e.key === "Enter") doSearch();
+});
+document.getElementById("captchaInput").addEventListener("keydown", e => {
+  if (e.key === "Enter") doSearch();
+});
+
+/* 初始化 */
+refreshCaptcha();
+</script>
+</body>
+</html>
