@@ -224,6 +224,7 @@
     <div class="form-body">
       <div class="field">
         <label id="inputLabel">案件编号<em>*</em></label>
+        <!-- 修改了这里的 placeholder，去掉了 QS20251113004 -->
         <input type="text" id="queryInput" placeholder="请输入案件编号，例如：QS20260714001" autocomplete="off">
         <div class="hint" id="inputHint">
           案件编号可在《受案回执》或《立案告知书》右上角查看，格式为 QS + 年月日 + 序号。
@@ -245,7 +246,7 @@
       <button type="button" class="btn-reset" id="btnReset">重 置</button>
     </div>
 
-    <!-- 演示提示（游戏内可见） -->
+    <!-- 演示提示（游戏内可见） - 去掉了 QS20251113004 -->
     <div class="tip-box">
       <b>【游戏内演示提示】</b>可用案件编号：
       <b>QS20260714001</b>（侦查中）、
@@ -347,6 +348,26 @@ const CASES = [
       { date:"2026-04-28 15:40", title:"组织调解", desc:"经双方自愿申请，派出所组织治安调解并达成协议。" },
       { date:"2026-04-30 11:00", title:"案件办结", desc:"调解协议履行完毕，案件依法办结并归档。" }
     ]
+  },
+  /* ===== 新增：青山市实验中学打架斗殴案（界面不提示，但输入案号可查） ===== */
+  {
+    id: "QS20251113004",
+    no: "青公（刑）诉字〔2025〕第 1107 号",
+    category: "治安案件",
+    charge: "打架斗殴",
+    status: "已结案",
+    statusClass: "st-done",
+    unit: "青山市公安局青河分局光明派出所",
+    officer: "常海军",
+    place: "青山市实验中学",
+    filed: "2025-11-13",
+    idcards: [],
+    progress: [
+      { date:"2025-11-13 19:03", title:"受理报案", desc:"群众报警称在学校发生打架斗殴，民警到场控制现场。" },
+      { date:"2025-11-14 08:00", title:"调查取证", desc:"对双方当事人及 3 名证人进行询问，调取现场监控。" },
+      { date:"2025-11-14 15:40", title:"组织调解", desc:"经双方自愿申请，派出所组织治安调解并达成协议。" },
+      { date:"2025-11-15 11:00", title:"案件办结", desc:"调解协议履行完毕，案件依法办结并归档。" }
+    ]
   }
 ];
 
@@ -374,6 +395,7 @@ tabs.forEach(btn => {
     const input = document.getElementById("queryInput");
     if (mode === "no") {
       document.getElementById("inputLabel").innerHTML = "案件编号<em>*</em>";
+      // 这里的 placeholder 也改回了通用示例
       input.placeholder = "请输入案件编号，例如：QS20260714001";
       document.getElementById("inputHint").textContent =
         "案件编号可在《受案回执》或《立案告知书》右上角查看，格式为 QS + 年月日 + 序号。";

@@ -167,10 +167,9 @@
   }
   .news-feature .thumb {
     width:180px; height:112px; flex-shrink:0;
-    background:linear-gradient(135deg,#1d5091,#0b2245);
     border-radius:3px;
-    display:flex; align-items:center; justify-content:center;
-    color:rgba(255,255,255,.35); font-size:12px; letter-spacing:2px;
+    object-fit: cover; /* 确保图片不变形 */
+    background:linear-gradient(135deg,#1d5091,#0b2245); /* 图片加载失败时的背景 */
   }
   .news-feature h3 {
     font-size:17px; color:#143a6b; margin-bottom:10px; line-height:1.5;
@@ -392,7 +391,8 @@
       </div>
 
       <div class="news-feature">
-        <div class="thumb">新闻配图</div>
+        <!-- 这里放入了图二的图片，请确保 meeting.jpg 在同一个文件夹里 -->
+        <img src="青山市公安局夏季治安部署会.png" alt="青山市公安局召开夏季治安打击整治行动部署会" class="thumb">
         <div>
           <h3>青山市公安局召开夏季治安打击整治行动部署会</h3>
           <p>7月14日，青山市公安局召开专题会议，部署开展为期三个月的夏季治安打击整治行动，重点围绕夜市商圈、交通枢纽、城乡结合部等区域，强化巡逻防控与隐患排查，全力维护全市社会治安大局稳定。</p>
@@ -451,7 +451,6 @@
         <a href="#" class="service-item">
           <div class="ico">🏢</div><span>居住证办理</span>
         </a>
-        <!-- 修改了这里：案件进度查询跳转到 case-query.html -->
         <a href="case-query.html" class="service-item">
           <div class="ico">🔍</div><span>案件进度查询</span>
         </a>
