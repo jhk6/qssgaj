@@ -120,7 +120,7 @@
   .tl-desc { font-size:13px; color:#6b7a8d; line-height:1.75; }
   .tl-item.current .tl-title { color:#b8860b; }
 
-  /* ===== 新增：进度中的附件链接 ===== */
+  /* 进度中的附件链接 */
   .tl-link { margin-top:9px; }
   .tl-link a {
     display:inline-flex; align-items:center; gap:6px;
@@ -257,7 +257,7 @@
       <button type="button" class="btn-reset" id="btnReset">重 置</button>
     </div>
 
-    <!-- 演示提示 -->
+    <!-- 演示提示（不包含新增案件及对应身份证号） -->
     <div class="tip-box">
       <b>【游戏内演示提示】</b>可用案件编号：
       <b>QS20260714001</b>（侦查中）、
@@ -360,7 +360,7 @@ const CASES = [
       { date:"2026-04-30 11:00", title:"案件办结", desc:"调解协议履行完毕，案件依法办结并归档。" }
     ]
   },
-  /* ===== 青山市实验中学打架斗殴案 ===== */
+  /* ===== 青山市实验中学打架斗殴案（可通过 976676200909051234 查询） ===== */
   {
     id: "QS20251113004",
     no: "青公（刑）诉字〔2025〕第 1107 号",
@@ -372,7 +372,7 @@ const CASES = [
     officer: "常海军",
     place: "青山市实验中学",
     filed: "2025-11-13",
-    idcards: [],
+    idcards: ["976676200909051234"],
     progress: [
       { date:"2025-11-13 19:03", title:"受理报案", desc:"群众报警称在学校发生打架斗殴，民警到场控制现场。" },
       { date:"2025-11-14 08:00", title:"调查取证", desc:"对双方当事人及 3 名证人进行询问，调取现场监控。" },
@@ -383,6 +383,26 @@ const CASES = [
         desc:"调解协议履行完毕，案件依法办结并归档。",
         link: { text:"附治安调解协议书链接", url:"mediation-agreement.html" }
       }
+    ]
+  },
+  /* ===== 青山市实验中学非正常死亡案（可通过 976676200909051234 查询） ===== */
+  {
+    id: "QS20260923001",
+    no: "青公（刑）非死字〔2026〕第 0923 号",
+    category: "非正常死亡案件",
+    charge: "有人疑似自杀",
+    status: "已结案",
+    statusClass: "st-done",
+    unit: "青山市公安局青河分局光明派出所",
+    officer: "张乔晞",
+    place: "青山市实验中学",
+    filed: "2026-09-23",
+    idcards: ["976676200909051234"],
+    progress: [
+      { date:"2026-09-23 07:06", title:"受理报案", desc:"群众报警称在学校仓库发现有人自杀。" },
+      { date:"2026-09-23 07:30", title:"调查取证", desc:"刑警到达现场取证。" },
+      { date:"2026-09-23 10:40", title:"整理证据", desc:"刑侦大队整理现有证据。" },
+      { date:"2026-09-23 11:00", title:"案件办结", desc:"检测出两位死者常某某和高某某血液内酒精浓度过高，判断其自杀之前大量饮酒导致醉酒，鉴于其有严重的心理问题，最终判定为自杀。" }
     ]
   }
 ];
@@ -437,7 +457,6 @@ function esc(s) {
 function renderCase(c) {
   const tl = c.progress.map((p, i) => {
     const isLast = i === c.progress.length - 1;
-    // 支持进度条中的附件链接
     const linkHtml = p.link
       ? `<div class="tl-link"><a href="${esc(p.link.url)}" target="_blank" rel="noopener">${esc(p.link.text)}</a></div>`
       : "";
