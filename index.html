@@ -168,8 +168,8 @@
   .news-feature .thumb {
     width:180px; height:112px; flex-shrink:0;
     border-radius:3px;
-    object-fit: cover; /* 确保图片不变形 */
-    background:linear-gradient(135deg,#1d5091,#0b2245); /* 图片加载失败时的背景 */
+    object-fit: cover;
+    background:linear-gradient(135deg,#1d5091,#0b2245);
   }
   .news-feature h3 {
     font-size:17px; color:#143a6b; margin-bottom:10px; line-height:1.5;
@@ -391,7 +391,7 @@
       </div>
 
       <div class="news-feature">
-        <!-- 这里放入了图二的图片，请确保 meeting.jpg 在同一个文件夹里 -->
+        <!-- 图片文件名已修改为 青山市公安局夏季治安部署会.png -->
         <img src="青山市公安局夏季治安部署会.png" alt="青山市公安局召开夏季治安打击整治行动部署会" class="thumb">
         <div>
           <h3>青山市公安局召开夏季治安打击整治行动部署会</h3>
@@ -451,6 +451,7 @@
         <a href="#" class="service-item">
           <div class="ico">🏢</div><span>居住证办理</span>
         </a>
+        <!-- 案件进度查询保留跳转 -->
         <a href="case-query.html" class="service-item">
           <div class="ico">🔍</div><span>案件进度查询</span>
         </a>
@@ -552,6 +553,15 @@
     </div>
   </div>
 </footer>
+
+<script>
+  // 阻止所有 href="#" 链接的默认跳转行为（不再回到页面顶部）
+  document.querySelectorAll('a[href="#"]').forEach(function(a) {
+    a.addEventListener('click', function(e) {
+      e.preventDefault();
+    });
+  });
+</script>
 
 </body>
 </html>
