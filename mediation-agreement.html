@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>治安调解协议书 - 青山市公安局</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family:"Microsoft YaHei","PingFang SC",sans-serif;
+    background:#f0f2f5; color:#333; font-size:14px;
+  }
+
+  /* 顶部条 */
+  .topbar { background:#16263c; color:#a8bcd4; font-size:12px; padding:6px 0; }
+  .topbar .inner { max-width:1200px; margin:0 auto; padding:0 20px; display:flex; justify-content:space-between; }
+  .topbar a { color:#a8bcd4; text-decoration:none; margin-left:16px; }
+  .topbar a:hover { color:#fff; }
+
+  /* 页头 */
+  header {
+    background:linear-gradient(135deg,#0b2245 0%,#143a6b 55%,#1d5091 100%);
+    color:#fff; position:relative; overflow:hidden;
+  }
+  header::after {
+    content:""; position:absolute; right:-60px; top:-60px;
+    width:320px; height:320px; border:2px solid rgba(255,255,255,.08); border-radius:50%;
+  }
+  .header-inner { max-width:1200px; margin:0 auto; padding:22px 20px; display:flex; align-items:center; gap:18px; position:relative; z-index:2; }
+  .emblem {
+    width:56px; height:56px; flex-shrink:0;
+    background:radial-gradient(circle at 50% 40%,#ffd76e 0%,#e0a92c 60%,#b8860b 100%);
+    border-radius:50%; display:flex; align-items:center; justify-content:center;
+    box-shadow:0 0 0 3px rgba(255,215,110,.25); font-size:26px;
+  }
+  .title-block h1 { font-size:26px; letter-spacing:5px; font-weight:700; text-shadow:0 2px 8px rgba(0,0,0,.35); }
+  .title-block .sub { font-size:11px; letter-spacing:3px; color:#9dc0ea; margin-top:5px; }
+  .header-right { margin-left:auto; text-align:right; font-size:12px; color:#9dc0ea; line-height:1.9; position:relative; z-index:2; }
+  .header-right strong { color:#ffd76e; font-size:15px; }
+
+  /* 导航 */
+  nav { background:#0f2a4d; border-top:1px solid rgba(255,255,255,.1); position:sticky; top:0; z-index:50; box-shadow:0 2px 10px rgba(0,0,0,.15); }
+  nav .inner { max-width:1200px; margin:0 auto; padding:0 20px; display:flex; }
+  nav a { color:#d6e4f5; text-decoration:none; padding:15px 26px; font-size:15px; position:relative; transition:.2s; }
+  nav a:hover, nav a.active { background:#1d5091; color:#fff; }
+  nav a.active::after { content:""; position:absolute; left:26px; right:26px; bottom:0; height:3px; background:#ffd76e; }
+
+  /* 面包屑 */
+  .crumb { max-width:860px; margin:14px auto 0; padding:0 20px; font-size:12px; color:#8a97a8; }
+  .crumb a { color:#8a97a8; text-decoration:none; }
+  .crumb a:hover { color:#1d5091; }
+  .crumb span { margin:0 6px; }
+
+  /* 操作条 */
+  .toolbar {
+    max-width:860px; margin:14px auto 0; padding:0 20px;
+    display:flex; justify-content:flex-end; gap:10px;
+  }
+  .toolbar button {
+    height:36px; padding:0 20px; font-size:13px;
+    font-family:inherit; cursor:pointer; border-radius:3px;
+    border:1px solid #d5dce6; background:#fff; color:#4a5a6e;
+    transition:.2s;
+  }
+  .toolbar button:hover { border-color:#1d5091; color:#1d5091; }
+  .toolbar button.primary {
+    background:linear-gradient(180deg,#1d5091,#143a6b);
+    color:#fff; border-color:#143a6b;
+  }
+  .toolbar button.primary:hover { background:linear-gradient(180deg,#24609f,#1a4680); }
+
+  /* ===== 公文纸张 ===== */
+  .paper {
+    max-width:860px; margin:14px auto 50px;
+    background:#fff; padding:56px 66px 70px;
+    border:1px solid #e3e8ef;
+    box-shadow:0 4px 24px rgba(0,0,0,.07);
+    position:relative;
+    font-family:"SimSun","Songti SC","Microsoft YaHei",serif;
+    color:#1a1a1a;
+    line-height:2;
+  }
+
+  /* 头部 */
+  .doc-head { text-align:center; padding-bottom:16px; border-bottom:3px double #c62828; margin-bottom:26px; }
+  .doc-head .org {
+    font-size:22px; font-weight:700; color:#c62828;
+    letter-spacing:4px; font-family:"SimHei","Microsoft YaHei",sans-serif;
+  }
+  .doc-head .title {
+    font-size:28px; font-weight:700; letter-spacing:12px;
+    margin:16px 0 4px; color:#111;
+    font-family:"SimHei","Microsoft YaHei",sans-serif;
+  }
+  .doc-head .doc-no {
+    font-size:13px; color:#555; letter-spacing:1px;
+    margin-top:12px; font-family:"SimSun",serif;
+  }
+
+  /* 内容行 */
+  .paper p { font-size:15px; text-indent:2em; margin-bottom:10px; }
+  .paper p.no-indent { text-indent:0; }
+
+  .paper h3 {
+    font-size:15px; font-weight:700; color:#111;
+    margin:22px 0 10px; text-indent:2em;
+    font-family:"SimHei","Microsoft YaHei",sans-serif;
+  }
+
+  /* 划线填空 */
+  .u {
+    display:inline-block;
+    min-width:60px;
+    padding:0 6px;
+    border-bottom:1px solid #333;
+    text-align:center;
+    text-indent:0;
+  }
+  .u.long { min-width:160px; text-align:left; }
+  .u.xlong { min-width:260px; text-align:left; }
+
+  /* 遮挡（隐私信息） */
+  .redact {
+    display:inline-block;
+    color:#333;
+    letter-spacing:1px;
+    user-select:none;
+  }
+
+  /* 落款 */
+  .sign-block {
+    margin-top:44px;
+    position:relative;
+  }
+  .sign-row {
+    display:flex; justify-content:space-between;
+    margin-bottom:22px; font-size:15px;
+  }
+  .sign-row .item { flex:1; }
+  .sign-row .item:last-child { text-align:right; }
+  .sign-label { color:#333; }
+  .sign-name {
+    display:inline-block;
+    border-bottom:1px solid #333;
+    padding:0 20px;
+    font-family:"Kaiti SC","KaiTi",cursive,serif;
+    font-size:18px;
+    margin-left:6px;
+    font-style:italic;
+  }
+
+  .stamp-wrap {
+    margin-top:36px;
+    display:flex; justify-content:flex-end;
+    position:relative;
+  }
+  .stamp {
+    width:150px; height:150px; border-radius:50%;
+    border:3px solid #c62828;
+    display:flex; align-items:center; justify-content:center;
+    color:#c62828; opacity:.82;
+    transform:rotate(-14deg);
+    position:relative;
+    margin-right:40px;
+  }
+  .stamp::before {
+    content:"";
+    position:absolute; inset:8px;
+    border:1px solid #c62828;
+    border-radius:50%;
+  }
+  .stamp .txt {
+    text-align:center;
+    font-size:12px;
+    line-height:1.5;
+    font-family:"SimHei","Microsoft YaHei",sans-serif;
+    letter-spacing:1px;
+    padding:0 14px;
+  }
+  .stamp .star {
+    position:absolute; top:16px;
+    font-size:16px;
+  }
+
+  .divider {
+    margin:30px 0 20px;
+    border-top:1px dashed #ddd;
+  }
+
+  .footer-note {
+    font-size:12px; color:#888; text-align:center;
+    font-family:"Microsoft YaHei",sans-serif;
+    text-indent:0 !important;
+    margin-top:30px;
+  }
+
+  @media print {
+    .topbar, header, nav, .crumb, .toolbar, footer { display:none !important; }
+    body { background:#fff; }
+    .paper { box-shadow:none; border:none; margin:0; padding:30px 40px; max-width:100%; }
+  }
+
+  @media (max-width:700px) {
+    .paper { padding:32px 22px 46px; }
+    .doc-head .title { font-size:22px; letter-spacing:6px; }
+    .sign-row { flex-direction:column; gap:16px; }
+    .sign-row .item:last-child { text-align:left; }
+  }
+</style>
+</head>
+<body>
+
+<!-- 顶部条 -->
+<div class="topbar">
+  <div class="inner">
+    <div>青山市公安局 · 官方网站（政务类）</div>
+    <div>
+      <a href="#">无障碍浏览</a>
+      <a href="#">繁體</a>
+      <a href="#">EN</a>
+      <a href="#">登录</a>
+    </div>
+  </div>
+</div>
+
+<!-- 页头 -->
+<header>
+  <div class="header-inner">
+    <div class="emblem">🛡</div>
+    <div class="title-block">
+      <h1>青山市公安局</h1>
+      <div class="sub">QINGSHAN MUNICIPAL PUBLIC SECURITY BUREAU</div>
+    </div>
+    <div class="header-right">
+      24小时报警服务电话<br>
+      <strong>110</strong> &nbsp;|&nbsp; 监督投诉 <strong>12389</strong>
+    </div>
+  </div>
+</header>
+
+<!-- 导航 -->
+<nav>
+  <div class="inner">
+    <a href="index.html">首页</a>
+    <a href="#">政务公开</a>
+    <a href="#">警务资讯</a>
+    <a href="#" class="active">办事服务</a>
+    <a href="#">警民互动</a>
+    <a href="#">法律法规</a>
+    <a href="#">网上110</a>
+  </div>
+</nav>
+
+<!-- 面包屑 -->
+<div class="crumb">
+  <a href="index.html">首页</a><span>&gt;</span>
+  <a href="case-query.html">案件进度查询</a><span>&gt;</span>
+  治安调解协议书
+</div>
+
+<!-- 操作条 -->
+<div class="toolbar">
+  <button type="button" onclick="window.print()">打印 / 保存</button>
+  <button type="button" class="primary" onclick="history.back()">返回</button>
+</div>
+
+<!-- 公文纸张 -->
+<div class="paper">
+
+  <div class="doc-head">
+    <div class="org">青山市公安局青河分局光明派出所</div>
+    <div class="title">治安调解协议书</div>
+    <div class="doc-no">青公（6）调解字〔2025〕第43号</div>
+  </div>
+
+  <p class="no-indent">
+    主持人姓名：<span class="u long">常海军、常空军</span>
+    工作单位：<span class="u long">青山市公安局</span>
+  </p>
+  <p class="no-indent">
+    调解地点：<span class="u xlong">青山市公安局青河分局光明派出所</span>
+  </p>
+  <p class="no-indent">
+    调解时间：<span class="u">2025</span> 年 <span class="u">11</span> 月 <span class="u">14</span> 日 <span class="u">15</span> 时
+  </p>
+
+  <h3>当事人基本情况：</h3>
+
+  <p>
+    甲方（违法行为人）：<span class="u">常某某</span>，性别：<span class="u">男</span>，
+    <span class="u">2009</span> 年 <span class="u">9</span> 月 <span class="u">5</span> 日出生，
+    身份证号码：<span class="u xlong">976676200909051234</span>，
+    现住址：<span class="u xlong">青山市青河区平安大道103号</span>。
+  </p>
+
+  <p>
+    乙方（被侵害人）：<span class="u">林某</span>，性别：<span class="u">男</span>，
+    <span class="u">2010</span> 年 <span class="u">4</span> 月 <span class="u">9</span> 日出生，
+    身份证号码：<span class="u xlong">976676201004095432</span>，
+    现住址：<span class="u xlong">青山市柳树县庆才村 7 组</span>。
+  </p>
+
+  <h3>法定代理人（监护人）：</h3>
+
+  <p>
+    甲方监护人：<span class="u">常陆军</span>，
+    与当事人关系：<span class="u">父子</span>，
+    联系方式：<span class="u long">18888888888</span>。
+  </p>
+
+  <p>
+    乙方监护人：<span class="u redact">■■■</span>，
+    与当事人关系：<span class="u redact">■■</span>，
+    联系方式：<span class="u long redact">■■■■</span>。
+  </p>
+
+  <h3>主要事实：</h3>
+
+  <p>
+    <span class="u">2025</span> 年 <span class="u">11</span> 月 <span class="u">13</span> 日
+    <span class="u">19</span> 时许，常某某在
+    <span class="u xlong">青山市实验高中</span>（地点）因
+    <span class="u">琐事</span>（起因）与
+    <span class="u">林某</span> 发生冲突，对其实施
+    <span class="u long">殴打、欺凌行为</span>（具体行为），造成
+    <span class="u long">右臂、右腿</span> 受伤。经
+    <span class="u long">青山市人民医院</span>（鉴定机构）鉴定，伤情为轻微伤。
+  </p>
+
+  <p>经调解，双方自愿达成如下协议：</p>
+
+  <p>
+    一、常某某及其监护人向 <span class="u">林某</span> 及其监护人当面赔礼道歉。
+  </p>
+
+  <p>
+    二、常某某及其监护人一次性赔偿医疗费、护理费、交通费等各项费用共计人民币
+    <span class="u">20000</span> 元（大写：<span class="u long">贰万元</span>），
+    于本协议签订之日起 <span class="u">3</span> 日内履行完毕。
+  </p>
+
+  <p>
+    三、<span class="u">林某</span> 及其监护人不再就本次事件向常某某主张民事赔偿。
+  </p>
+
+  <p>
+    四、双方承诺就本次事件不再发生任何纠纷，不再以任何方式相互追究。
+  </p>
+
+  <p class="no-indent" style="margin-top:16px;">
+    履行方式：☑ 当场履行完毕 &nbsp;&nbsp; ☐ 限期履行（<span class="u">　</span>年<span class="u">　</span>月<span class="u">　</span>日前） &nbsp;&nbsp; ☐ 分期履行
+  </p>
+
+  <div class="divider"></div>
+
+  <p style="font-size:13px; color:#555; text-indent:2em;">
+    本协议自双方签字之日起生效。经公安机关调解达成协议并履行的，对违反治安管理行为人依法不予处罚。达成协议后不履行的，公安机关将依法对违反治安管理行为人给予处罚，并告知当事人可以就民事争议依法向人民法院提起民事诉讼。
+  </p>
+
+  <!-- 签字 -->
+  <div class="sign-block">
+    <div class="sign-row">
+      <div class="item">
+        <span class="sign-label">甲方（签字）：</span>
+        <span class="sign-name">常峻硕</span>
+      </div>
+      <div class="item">
+        <span class="sign-label">日期：</span>
+        <span style="font-family:'Kaiti SC','KaiTi',cursive,serif;">2025 年 11 月 14 日</span>
+      </div>
+    </div>
+
+    <div class="sign-row">
+      <div class="item">
+        <span class="sign-label">甲方监护人（签字）：</span>
+        <span class="sign-name">常陆军</span>
+      </div>
+      <div class="item">
+        <span class="sign-label">日期：</span>
+        <span style="font-family:'Kaiti SC','KaiTi',cursive,serif;">2025 年 11 月 14 日</span>
+      </div>
+    </div>
+
+    <div class="sign-row">
+      <div class="item">
+        <span class="sign-label">乙方（签字）：</span>
+        <span class="sign-name">林圻</span>
+      </div>
+      <div class="item">
+        <span class="sign-label">日期：</span>
+        <span style="font-family:'Kaiti SC','KaiTi',cursive,serif;">2025 年 11 月 14 日</span>
+      </div>
+    </div>
+
+    <div class="sign-row">
+      <div class="item">
+        <span class="sign-label">乙方监护人（签字）：</span>
+        <span class="redact" style="display:inline-block; border-bottom:1px solid #333; padding:0 60px;">&nbsp;</span>
+      </div>
+      <div class="item">
+        <span class="sign-label">日期：</span>
+        <span style="font-family:'Kaiti SC','KaiTi',cursive,serif;">2025 年 11 月 14 日</span>
+      </div>
+    </div>
+
+    <div class="sign-row">
+      <div class="item">
+        <span class="sign-label">主持调解民警（签字）：</span>
+        <span class="sign-name">常海军、常空军</span>
+      </div>
+    </div>
+
+    <div class="sign-row">
+      <div class="item">
+        <span class="sign-label">调解机关（盖章）：</span>
+        <span style="font-family:'SimHei','Microsoft YaHei',sans-serif;">青山市公安局青河分局光明派出所</span>
+      </div>
+      <div class="item">
+        <span style="font-family:'Kaiti SC','KaiTi',cursive,serif;">2025 年 11 月 14 日</span>
+      </div>
+    </div>
+
+    <!-- 公章 -->
+    <div class="stamp-wrap">
+      <div class="stamp">
+        <div class="star">★</div>
+        <div class="txt">
+          青山市公安局<br>
+          青河分局光明派出所<br>
+          2025.11.14
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <p class="footer-note">
+    — 本页面为虚构世界观设定，与任何现实机构无关 —
+  </p>
+
+</div>
+
+<!-- 页脚 -->
+<footer style="background:#0f2136; color:#7d92ab; font-size:12px; padding:26px 0 20px; border-top:3px solid #1d5091;">
+  <div style="max-width:1200px; margin:0 auto; padding:0 20px; line-height:2;">
+    <strong style="color:#a8bcd4;">主办单位：</strong>青山市公安局 &nbsp;|&nbsp;
+    <strong style="color:#a8bcd4;">地址：</strong>青山市青河区平安大道 1 号 &nbsp;|&nbsp;
+    <strong style="color:#a8bcd4;">邮编：</strong>310000<br>
+    <strong style="color:#a8bcd4;">报警电话：</strong>110 &nbsp;|&nbsp;
+    <strong style="color:#a8bcd4;">监督投诉：</strong>12389 &nbsp;|&nbsp;
+    <strong style="color:#a8bcd4;">政务服务热线：</strong>12345<br>
+    网站标识码：0000000000 &nbsp;|&nbsp;
+    备案号：青山ICP备00000000号 &nbsp;|&nbsp;
+    公安机关备案号：00000000000000<br>
+    <span style="color:#4a5f78;">本站为虚构世界观设定，与任何现实机构无关</span>
+  </div>
+</footer>
+
+<script>
+  // 阻止所有 href="#" 链接的默认跳转行为
+  document.querySelectorAll('a[href="#"]').forEach(function(a) {
+    a.addEventListener('click', function(e) { e.preventDefault(); });
+  });
+</script>
+
+</body>
+</html>

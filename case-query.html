@@ -120,6 +120,18 @@
   .tl-desc { font-size:13px; color:#6b7a8d; line-height:1.75; }
   .tl-item.current .tl-title { color:#b8860b; }
 
+  /* ===== 新增：进度中的附件链接 ===== */
+  .tl-link { margin-top:9px; }
+  .tl-link a {
+    display:inline-flex; align-items:center; gap:6px;
+    color:#1d5091; text-decoration:none;
+    font-size:13px; padding-bottom:1px;
+    border-bottom:1px dashed #1d5091;
+    transition:.2s;
+  }
+  .tl-link a:hover { color:#c62828; border-bottom-color:#c62828; }
+  .tl-link a::before { content:"📎"; font-size:12px; }
+
   .empty { padding:60px 20px; text-align:center; color:#a0adbd; }
   .empty .ico { font-size:42px; margin-bottom:14px; opacity:.5; }
   .empty .t { font-size:15px; color:#6b7a8d; margin-bottom:8px; }
@@ -224,7 +236,6 @@
     <div class="form-body">
       <div class="field">
         <label id="inputLabel">案件编号<em>*</em></label>
-        <!-- 修改了这里的 placeholder，去掉了 QS20251113004 -->
         <input type="text" id="queryInput" placeholder="请输入案件编号，例如：QS20260714001" autocomplete="off">
         <div class="hint" id="inputHint">
           案件编号可在《受案回执》或《立案告知书》右上角查看，格式为 QS + 年月日 + 序号。
@@ -246,7 +257,7 @@
       <button type="button" class="btn-reset" id="btnReset">重 置</button>
     </div>
 
-    <!-- 演示提示（游戏内可见） - 去掉了 QS20251113004 -->
+    <!-- 演示提示 -->
     <div class="tip-box">
       <b>【游戏内演示提示】</b>可用案件编号：
       <b>QS20260714001</b>（侦查中）、
@@ -349,7 +360,7 @@ const CASES = [
       { date:"2026-04-30 11:00", title:"案件办结", desc:"调解协议履行完毕，案件依法办结并归档。" }
     ]
   },
-  /* ===== 新增：青山市实验中学打架斗殴案（界面不提示，但输入案号可查） ===== */
+  /* ===== 青山市实验中学打架斗殴案 ===== */
   {
     id: "QS20251113004",
     no: "青公（刑）诉字〔2025〕第 1107 号",
@@ -366,7 +377,12 @@ const CASES = [
       { date:"2025-11-13 19:03", title:"受理报案", desc:"群众报警称在学校发生打架斗殴，民警到场控制现场。" },
       { date:"2025-11-14 08:00", title:"调查取证", desc:"对双方当事人及 3 名证人进行询问，调取现场监控。" },
       { date:"2025-11-14 15:40", title:"组织调解", desc:"经双方自愿申请，派出所组织治安调解并达成协议。" },
-      { date:"2025-11-15 11:00", title:"案件办结", desc:"调解协议履行完毕，案件依法办结并归档。" }
+      {
+        date:"2025-11-15 11:00",
+        title:"案件办结",
+        desc:"调解协议履行完毕，案件依法办结并归档。",
+        link: { text:"附治安调解协议书链接", url:"mediation-agreement.html" }
+      }
     ]
   }
 ];
@@ -395,7 +411,6 @@ tabs.forEach(btn => {
     const input = document.getElementById("queryInput");
     if (mode === "no") {
       document.getElementById("inputLabel").innerHTML = "案件编号<em>*</em>";
-      // 这里的 placeholder 也改回了通用示例
       input.placeholder = "请输入案件编号，例如：QS20260714001";
       document.getElementById("inputHint").textContent =
         "案件编号可在《受案回执》或《立案告知书》右上角查看，格式为 QS + 年月日 + 序号。";
@@ -422,10 +437,14 @@ function esc(s) {
 function renderCase(c) {
   const tl = c.progress.map((p, i) => {
     const isLast = i === c.progress.length - 1;
+    // 支持进度条中的附件链接
+    const linkHtml = p.link
+      ? `<div class="tl-link"><a href="${esc(p.link.url)}" target="_blank" rel="noopener">${esc(p.link.text)}</a></div>`
+      : "";
     return `<div class="tl-item${isLast ? " current" : ""}">
       <div class="tl-date">${esc(p.date)}</div>
       <div class="tl-title">${esc(p.title)}</div>
-      <div class="tl-desc">${esc(p.desc)}</div>
+      <div class="tl-desc">${esc(p.desc)}${linkHtml}</div>
     </div>`;
   }).join("");
 
