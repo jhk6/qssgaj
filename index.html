@@ -2,6 +2,7 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>青山市公安局</title>
 <style>
   * { margin:0; padding:0; box-sizing:border-box; }
@@ -120,13 +121,14 @@
   }
   .notice-scroll span {
     display:block; line-height:22px;
-    animation: scrollUp 14s linear infinite;
+    animation: scrollUp 18s linear infinite;
     color:#333;
   }
   @keyframes scrollUp {
-    0%,15%   { transform: translateY(0); }
-    45%,60%  { transform: translateY(-22px); }
-    90%,100% { transform: translateY(-44px); }
+    0%,12%   { transform: translateY(0); }
+    35%,45%  { transform: translateY(-22px); }
+    68%,78%  { transform: translateY(-44px); }
+    100%     { transform: translateY(-66px); }
   }
 
   /* ===== 主布局 ===== */
@@ -198,14 +200,11 @@
   .news-list a {
     color:#333; text-decoration:none; flex:1;
     overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
+    transition:.18s;
+    cursor:pointer;
   }
   .news-list a:hover { color:#1d5091; }
   .news-list .date { color:#a0adbd; font-size:12px; margin-left:14px; }
-  .news-list .tag-new {
-    background:#e8f0fb; color:#1d5091;
-    font-size:11px; padding:1px 6px; border-radius:2px;
-    margin-left:10px;
-  }
 
   /* ===== 办事服务网格 ===== */
   .service-grid {
@@ -312,6 +311,103 @@
   .footer-info { line-height:2; }
   .footer-info strong { color:#a8bcd4; }
 
+  /* ===== 模态框 ===== */
+  .modal-mask {
+    position:fixed; inset:0; z-index:300;
+    background:rgba(11,34,69,.55);
+    backdrop-filter:blur(4px);
+    display:none;
+    align-items:center; justify-content:center;
+    padding:20px;
+  }
+  .modal-mask.show { display:flex; animation:maskIn .2s ease; }
+  @keyframes maskIn { from{opacity:0} to{opacity:1} }
+
+  .modal-box {
+    background:#fff;
+    width:100%; max-width:640px;
+    max-height:82vh;
+    border-radius:6px;
+    box-shadow:0 30px 60px -20px rgba(11,34,69,.5);
+    display:flex; flex-direction:column;
+    overflow:hidden;
+    animation:boxIn .28s cubic-bezier(.2,.8,.3,1);
+    position:relative;
+  }
+  @keyframes boxIn {
+    from{opacity:0;transform:translateY(14px) scale(.98)}
+    to{opacity:1;transform:none}
+  }
+
+  .modal-head {
+    padding:18px 24px;
+    border-bottom:1px solid #e3e8ef;
+    background:linear-gradient(135deg,#0b2245,#1d5091);
+    color:#fff;
+    position:relative;
+  }
+  .modal-head .org {
+    font-size:12px; color:#9dc0ea; letter-spacing:1px;
+    margin-bottom:6px;
+  }
+  .modal-head h3 {
+    font-size:17px; letter-spacing:.5px; font-weight:600;
+    line-height:1.5;
+    padding-right:30px;
+  }
+  .modal-close {
+    position:absolute; top:14px; right:14px;
+    width:30px; height:30px; border-radius:6px;
+    background:rgba(255,255,255,.12);
+    color:#fff; font-size:18px; line-height:1;
+    border:none; cursor:pointer;
+    display:grid; place-items:center;
+    transition:.18s;
+  }
+  .modal-close:hover { background:rgba(255,255,255,.25); }
+
+  .modal-body {
+    padding:26px 28px 28px;
+    overflow-y:auto;
+    font-family:"SimSun","Songti SC","Microsoft YaHei",serif;
+    font-size:15px;
+    line-height:2;
+    color:#1a1a1a;
+  }
+  .modal-body p { text-indent:2em; margin-bottom:12px; }
+  .modal-body p.no-indent { text-indent:0; }
+  .modal-body strong { color:#0d3b66; font-weight:700; }
+  .modal-body .meta {
+    padding:12px 16px; background:#f4f7fa;
+    border-left:3px solid #1d5091;
+    font-size:13px; color:#4a5a6e;
+    text-indent:0; margin:18px 0;
+    border-radius:0 4px 4px 0;
+  }
+  .modal-body .sign {
+    text-align:right; text-indent:0;
+    margin-top:24px; color:#143a6b;
+    font-weight:600;
+  }
+
+  .modal-foot {
+    padding:14px 24px;
+    border-top:1px solid #e3e8ef;
+    background:#fafbfd;
+    display:flex; justify-content:flex-end; gap:10px;
+  }
+  .modal-foot button {
+    height:36px; padding:0 22px;
+    border-radius:3px; font-family:inherit;
+    font-size:13.5px; cursor:pointer;
+    transition:.2s; border:1px solid transparent;
+  }
+  .modal-foot .btn-close {
+    background:#fff; color:#4a5a6e;
+    border-color:#d5dce6;
+  }
+  .modal-foot .btn-close:hover { border-color:#1d5091; color:#1d5091; }
+
   @media (max-width:900px) {
     .container { grid-template-columns:1fr; }
     .service-grid { grid-template-columns:repeat(2,1fr); }
@@ -371,7 +467,8 @@
       <span>
         关于青山市户籍业务系统升级维护的公告 &nbsp;·&nbsp;
         2026年第二季度全市道路交通违法处理窗口调整通知 &nbsp;·&nbsp;
-        关于开展夏季社会治安专项整治行动的通告
+        关于开展夏季社会治安专项整治行动的通告 &nbsp;·&nbsp;
+        我局网安部门破获一起利用网络编码传递信息的案件，警方提醒市民提高警惕
       </span>
     </div>
   </div>
@@ -391,7 +488,6 @@
       </div>
 
       <div class="news-feature">
-        <!-- 图片文件名已修改为 青山市公安局夏季治安部署会.png -->
         <img src="青山市公安局夏季治安部署会.png" alt="青山市公安局召开夏季治安打击整治行动部署会" class="thumb">
         <div>
           <h3>青山市公安局召开夏季治安打击整治行动部署会</h3>
@@ -401,9 +497,13 @@
       </div>
 
       <ul class="news-list">
+        <!-- Base64 案件（点击弹出通报全文） -->
+        <li>
+          <a data-alert="base64">我局网安部门破获一起利用网络编码传递信息的案件</a>
+          <span class="date">09-20</span>
+        </li>
         <li>
           <a href="#">青山交警开展"一盔一带"安全守护集中宣传日活动</a>
-          <span class="tag-new">新</span>
           <span class="date">07-13</span>
         </li>
         <li>
@@ -421,10 +521,6 @@
         <li>
           <a href="#">青山市禁毒办走进校园开展青少年毒品预防教育</a>
           <span class="date">07-09</span>
-        </li>
-        <li>
-          <a href="#">关于优化调整市区部分路段交通组织的通告</a>
-          <span class="date">07-08</span>
         </li>
       </ul>
     </div>
@@ -451,7 +547,6 @@
         <a href="#" class="service-item">
           <div class="ico">🏢</div><span>居住证办理</span>
         </a>
-        <!-- 案件进度查询保留跳转 -->
         <a href="case-query.html" class="service-item">
           <div class="ico">🔍</div><span>案件进度查询</span>
         </a>
@@ -469,7 +564,6 @@
   <!-- 右栏 -->
   <div class="side-col">
 
-    <!-- 快捷入口 -->
     <div class="card side-card">
       <div class="card-head"><h2>便民快捷</h2></div>
       <div class="quick-links">
@@ -481,7 +575,6 @@
       </div>
     </div>
 
-    <!-- 警情数据 -->
     <div class="card side-card">
       <div class="card-head"><h2>全市警情概况</h2></div>
       <div class="stats">
@@ -508,7 +601,6 @@
       </div>
     </div>
 
-    <!-- 警情通报 -->
     <div class="card side-card">
       <div class="card-head"><h2>警情通报</h2></div>
       <ul class="alarm-list">
@@ -554,12 +646,73 @@
   </div>
 </footer>
 
+<!-- ===== Base64 警情通报 · 模态框 ===== -->
+<div class="modal-mask" id="base64Modal">
+  <div class="modal-box">
+    <div class="modal-head">
+      <div class="org">青山市公安局网安支队</div>
+      <h3>【警情通报】我局破获一起利用网络编码传递信息的案件</h3>
+      <button class="modal-close" id="modalClose" aria-label="关闭">✕</button>
+    </div>
+
+    <div class="modal-body">
+      <p class="no-indent">2026年9月20日，我局网安部门在工作中发现，有嫌疑人利用 <strong>Base64</strong> 编码方式，将敏感信息隐藏在普通文字中传递，企图逃避监管。</p>
+
+      <p>经查，嫌疑人将关键信息编码后，分成若干段，分别发布在不同网页的<strong>边角位置</strong>，只有将各段按顺序拼接、再进行解码，才能还原完整内容。</p>
+
+      <p>目前，该案正在进一步侦办中。</p>
+
+      <p>警方提示：网络并非法外之地。如市民在浏览网页时发现来源不明的<strong>字母数字混合字符串</strong>，可通过正规工具尝试解码识别，切勿随意传播。</p>
+
+      <div class="meta">
+        案件编号：QS20260920007 &nbsp;|&nbsp; 侦办单位：网安支队 &nbsp;|&nbsp; 通报日期：2026-09-20
+      </div>
+
+      <p class="sign">青山市公安局网安支队<br>2026年9月20日</p>
+    </div>
+
+    <div class="modal-foot">
+      <button class="btn-close" id="modalCloseBtn">关 闭</button>
+    </div>
+  </div>
+</div>
+
 <script>
-  // 阻止所有 href="#" 链接的默认跳转行为（不再回到页面顶部）
+  /* 阻止所有 href="#" 链接的默认跳转 */
   document.querySelectorAll('a[href="#"]').forEach(function(a) {
-    a.addEventListener('click', function(e) {
+    a.addEventListener('click', function(e) { e.preventDefault(); });
+  });
+
+  /* ===== Base64 警情通报 · 模态框 ===== */
+  var modal = document.getElementById('base64Modal');
+  var btnClose = document.getElementById('modalClose');
+  var btnCloseBtn = document.getElementById('modalCloseBtn');
+
+  function openModal(){
+    modal.classList.add('show');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal(){
+    modal.classList.remove('show');
+    document.body.style.overflow = '';
+  }
+
+  /* 点击 [data-alert="base64"] 打开 */
+  document.querySelectorAll('[data-alert="base64"]').forEach(function(el){
+    el.style.cursor = 'pointer';
+    el.addEventListener('click', function(e){
       e.preventDefault();
+      openModal();
     });
+  });
+
+  btnClose.addEventListener('click', closeModal);
+  btnCloseBtn.addEventListener('click', closeModal);
+  modal.addEventListener('click', function(e){
+    if (e.target === modal) closeModal();
+  });
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape' && modal.classList.contains('show')) closeModal();
   });
 </script>
 
