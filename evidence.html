@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>补充材料 · 青山市公安局</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{
+    font-family:"Microsoft YaHei","PingFang SC",sans-serif;
+    background:#f0f2f5; color:#333; font-size:14px; line-height:1.7;
+  }
+  a{color:inherit;text-decoration:none}
+
+  /* 顶部条 */
+  .topbar{background:#16263c;color:#a8bcd4;font-size:12px;padding:6px 0}
+  .topbar .inner{max-width:1200px;margin:0 auto;padding:0 20px;display:flex;justify-content:space-between}
+  .topbar a{color:#a8bcd4;margin-left:16px}
+  .topbar a:hover{color:#fff}
+
+  /* 页头 */
+  header{
+    background:linear-gradient(135deg,#0b2245 0%,#143a6b 55%,#1d5091 100%);
+    color:#fff; position:relative; overflow:hidden;
+  }
+  header::after{content:"";position:absolute;right:-60px;top:-60px;
+    width:320px;height:320px;border:2px solid rgba(255,255,255,.08);border-radius:50%}
+  .header-inner{max-width:1200px;margin:0 auto;padding:22px 20px;
+    display:flex;align-items:center;gap:18px;position:relative;z-index:2}
+  .emblem{width:56px;height:56px;flex-shrink:0;
+    background:radial-gradient(circle at 50% 40%,#ffd76e 0%,#e0a92c 60%,#b8860b 100%);
+    border-radius:50%;display:flex;align-items:center;justify-content:center;
+    box-shadow:0 0 0 3px rgba(255,215,110,.25);font-size:26px}
+  .title-block h1{font-size:26px;letter-spacing:5px;font-weight:700;text-shadow:0 2px 8px rgba(0,0,0,.35)}
+  .title-block .sub{font-size:11px;letter-spacing:3px;color:#9dc0ea;margin-top:5px}
+  .header-right{margin-left:auto;text-align:right;font-size:12px;color:#9dc0ea;line-height:1.9;position:relative;z-index:2}
+  .header-right strong{color:#ffd76e;font-size:15px}
+
+  /* 导航 */
+  nav{background:#0f2a4d;border-top:1px solid rgba(255,255,255,.1);
+    position:sticky;top:0;z-index:50;box-shadow:0 2px 10px rgba(0,0,0,.15)}
+  nav .inner{max-width:1200px;margin:0 auto;padding:0 20px;display:flex}
+  nav a{color:#d6e4f5;padding:15px 26px;font-size:15px;position:relative;transition:.2s}
+  nav a:hover{background:#1d5091;color:#fff}
+  nav a.active{background:#1d5091;color:#fff}
+  nav a.active::after{content:"";position:absolute;left:26px;right:26px;bottom:0;
+    height:3px;background:#ffd76e}
+
+  /* 面包屑 */
+  .crumb{max-width:900px;margin:14px auto 0;padding:0 20px;font-size:12px;color:#8a97a8}
+  .crumb a{color:#8a97a8}
+  .crumb a:hover{color:#1d5091}
+  .crumb span{margin:0 6px}
+
+  /* 主体 */
+  .wrap{max-width:900px;margin:0 auto;padding:16px 20px 60px}
+
+  /* 警告条 */
+  .alert{
+    background:#fffbf0;border:1px solid #e6c96a;border-left:4px solid #d4a24a;
+    border-radius:4px;padding:14px 20px;margin-bottom:20px;
+    font-size:13px;color:#8a6d1f;line-height:1.9;
+  }
+  .alert strong{color:#b8860b}
+  .alert .tag{
+    display:inline-block;background:#d4a24a;color:#fff;
+    font-size:11px;padding:2px 8px;border-radius:3px;
+    margin-right:8px;letter-spacing:1px;vertical-align:1px;
+  }
+
+  /* 材料纸张 */
+  .paper{
+    background:#fff;border:1px solid #e3e8ef;border-radius:4px;
+    padding:50px 60px 60px;
+    box-shadow:0 4px 24px rgba(0,0,0,.06);
+    position:relative;
+    font-family:"SimSun","Songti SC","Microsoft YaHei",serif;
+    color:#1a1a1a;line-height:2;
+  }
+  .paper::before{
+    content:"内部材料";
+    position:absolute;top:20px;right:24px;
+    font-size:11px;letter-spacing:4px;
+    color:#c62828;
+    border:1px solid #c62828;
+    padding:2px 10px;border-radius:2px;
+    font-family:"SimHei",sans-serif;
+    opacity:.7;
+  }
+
+  .paper-head{
+    text-align:center;padding-bottom:20px;
+    border-bottom:2px solid #0b2245;margin-bottom:30px;
+  }
+  .paper-head .org{
+    font-size:15px;color:#0b2245;letter-spacing:3px;
+    font-family:"SimHei",sans-serif;
+  }
+  .paper-head .title{
+    font-size:24px;font-weight:700;color:#1a1a1a;
+    letter-spacing:6px;margin:16px 0 8px;
+    font-family:"SimHei",sans-serif;
+  }
+  .paper-head .no{
+    font-size:12.5px;color:#666;
+    font-family:"SimSun",serif;
+  }
+
+  .paper h3{
+    font-size:15px;font-weight:700;color:#0b2245;
+    margin:24px 0 12px;padding-left:12px;
+    border-left:4px solid #1d5091;
+    font-family:"SimHei",sans-serif;
+  }
+
+  .paper p{font-size:15px;text-indent:2em;margin-bottom:10px;line-height:2.1}
+  .paper p.no-indent{text-indent:0}
+
+  .paper .highlight{
+    background:linear-gradient(180deg, transparent 62%, #ffe9a8 62%);
+    padding:0 2px;
+    font-weight:600;
+    color:#0b2245;
+  }
+
+  /* 落款 */
+  .paper .sign{
+    margin-top:40px;padding-top:20px;
+    text-align:right;font-size:15px;line-height:2.2;
+  }
+  .paper .sign .who{
+    font-family:"Kaiti SC","KaiTi",cursive,serif;
+    font-size:19px;font-style:italic;
+  }
+
+  /* 手写批注 */
+  .paper .handwrite{
+    margin-top:32px;
+    padding:18px 22px;
+    background:#fdfaf0;
+    border:1px dashed #d4a24a;
+    border-radius:3px;
+    font-family:"Kaiti SC","KaiTi",cursive,serif;
+    font-size:16px;
+    color:#5a4226;
+    line-height:2;
+    text-indent:0;
+    position:relative;
+  }
+  .paper .handwrite::before{
+    content:"手写补充";
+    position:absolute;top:-10px;left:14px;
+    background:#fdfaf0;padding:0 8px;
+    font-size:11px;color:#b8860b;letter-spacing:2px;
+    font-family:"Microsoft YaHei",sans-serif;
+  }
+
+  /* 返回条 */
+  .back-bar{
+    margin-top:26px;
+    display:flex;justify-content:space-between;align-items:center;
+    flex-wrap:wrap;gap:12px;
+  }
+  .back-bar a{
+    display:inline-flex;align-items:center;gap:6px;
+    padding:8px 16px;border-radius:3px;font-size:13px;
+    background:#fff;border:1px solid #e3e8ef;color:#6b7a8d;
+    transition:.2s;
+  }
+  .back-bar a:hover{color:#1d5091;border-color:#1d5091}
+
+  /* 页脚 */
+  footer{
+    background:#0f2136;color:#7d92ab;
+    font-size:12px;padding:26px 0 20px;
+    border-top:3px solid #1d5091;
+  }
+  .footer-inner{max-width:1200px;margin:0 auto;padding:0 20px;line-height:2}
+  .footer-inner strong{color:#a8bcd4}
+
+  @media (max-width:700px){
+    .paper{padding:30px 22px 40px}
+    .paper-head .title{font-size:19px;letter-spacing:3px}
+    .paper p{font-size:14px}
+  }
+</style>
+</head>
+<body>
+
+<!-- 顶部条 -->
+<div class="topbar">
+  <div class="inner">
+    <div>青山市公安局 · 官方网站（政务类）</div>
+    <div>
+      <a href="#">无障碍浏览</a>
+      <a href="#">繁體</a>
+      <a href="#">EN</a>
+      <a href="case-query.html">返回查询</a>
+    </div>
+  </div>
+</div>
+
+<!-- 页头 -->
+<header>
+  <div class="header-inner">
+    <div class="emblem">🛡</div>
+    <div class="title-block">
+      <h1>青山市公安局</h1>
+      <div class="sub">QINGSHAN MUNICIPAL PUBLIC SECURITY BUREAU</div>
+    </div>
+    <div class="header-right">
+      24小时报警服务电话<br>
+      <strong>110</strong> &nbsp;|&nbsp; 监督投诉 <strong>12389</strong>
+    </div>
+  </div>
+</header>
+
+<!-- 导航 -->
+<nav>
+  <div class="inner">
+    <a href="index.html">首页</a>
+    <a href="#">政务公开</a>
+    <a href="#">警务资讯</a>
+    <a href="#" class="active">办事服务</a>
+    <a href="#">警民互动</a>
+    <a href="#">法律法规</a>
+    <a href="#">网上110</a>
+  </div>
+</nav>
+
+<!-- 面包屑 -->
+<div class="crumb">
+  <a href="index.html">首页</a><span>&gt;</span>
+  <a href="case-query.html">案件进度查询</a><span>&gt;</span>
+  补充材料
+</div>
+
+<!-- 主体 -->
+<div class="wrap">
+
+  <div class="alert">
+    <span class="tag">内部资料</span>
+    本页面为承办人提交的<strong>补充材料</strong>，未纳入案件正式结论。材料内容仅供备案。
+  </div>
+
+  <div class="paper">
+
+    <div class="paper-head">
+      <div class="org">青山市公安局青河分局光明派出所</div>
+      <div class="title">现场勘查补充记录</div>
+      <div class="no">案号：QS20260923001 &nbsp;|&nbsp; 承办人：张乔晞</div>
+    </div>
+
+    <p class="no-indent">
+      案件正式结案报告已另行归档。本材料为承办人在勘查过程中记录的<span class="highlight">存疑事项</span>，
+      一并报上级部门备案。
+    </p>
+
+    <h3>一、死者状态与"自杀"不符</h3>
+    <p>两名死者腕部均有明显<span class="highlight">挣扎痕迹</span>，皮肤表面有环形勒痕，
+      与"自行悬吊"所形成的一次性痕迹不符。</p>
+    <p>两名死者鞋底均沾有大量灰尘，与"自缢"所需的<span class="highlight">攀登动作</span>不符。
+      若为自杀，鞋底应相对干净。</p>
+
+    <h3>二、绳索上的第三人 DNA</h3>
+    <p>现场绳索上提取到的 DNA 与两名死者均不符，已送市局比对，<span class="highlight">结果至今未反馈</span>。
+      本所曾于 9 月 23 日下午电话询问市局比对进度，被告知"仍在处理中"。</p>
+
+    <h3>三、监控录像缺失</h3>
+    <p>案发当晚 <span class="highlight">01:30—01:32</span>，仓库周边监控录像出现空白约 2 分钟。
+      经查，录像系统当日无故障记录，空白原因不明。</p>
+
+    <h3>四、醉酒状态存疑</h3>
+    <p>两名死者血液酒精浓度过高，但现场未发现酒瓶、酒具或任何饮酒痕迹。
+      若两人在仓库内大量饮酒，应有酒具遗留。</p>
+
+    <h3>五、现场痕迹被清理</h3>
+    <p>仓库地面有明显<span class="highlight">清扫痕迹</span>，但校方称"仓库平时无人打扫"。
+      现场清理时间与两名死者被发现时间不吻合。</p>
+
+    <h3>结论</h3>
+    <p>综上，本案疑点重重，<span class="highlight">不应以"自杀"结案</span>。
+      建议市局刑侦部门重新介入，展开进一步侦查。</p>
+
+    <div class="sign">
+      <div class="who">张乔晞</div>
+      <div>青山市公安局青河分局光明派出所</div>
+      <div>2026 年 9 月 23 日</div>
+    </div>
+
+    <!-- 手写补充 -->
+    <div class="handwrite">
+      补：本材料已于 9 月 24 日通过内部渠道上报省厅。
+      省厅刑侦总队<strong>周振国</strong>副总队长阅后批示，要求暂不公开。
+      周总队长是我警校时的老师，素来正直。
+      如本案最终被压下来，希望这份材料能作为日后重审的依据。
+
+      <div style="margin-top:12px;text-align:right;font-style:italic;">
+        —— 乔晞 &nbsp; 9.25
+      </div>
+    </div>
+
+  </div>
+
+  <!-- 返回 -->
+  <div class="back-bar">
+    <a href="case-query.html">← 返回案件查询</a>
+    <a href="index.html">← 返回公安首页</a>
+  </div>
+
+</div>
+
+<!-- 页脚 -->
+<footer>
+  <div class="footer-inner">
+    <strong>主办单位：</strong>青山市公安局 &nbsp;|&nbsp;
+    <strong>地址：</strong>青山市青河区平安大道 1 号 &nbsp;|&nbsp;
+    <strong>邮编：</strong>310000<br>
+    <strong>报警电话：</strong>110 &nbsp;|&nbsp;
+    <strong>监督投诉：</strong>12389 &nbsp;|&nbsp;
+    <strong>政务服务热线：</strong>12345<br>
+    <span style="color:#4a5f78;">本站为虚构世界观设定，与任何现实机构无关</span>
+  </div>
+</footer>
+
+<!-- ============ 埋点：访问过张乔晞材料 ============ -->
+<script>
+(function(){
+  try{
+    var all = JSON.parse(localStorage.getItem('qs_clues') || '{}');
+    all['visited_evidence'] = 1;
+    localStorage.setItem('qs_clues', JSON.stringify(all));
+  }catch(e){}
+})();
+</script>
+
+</body>
+</html>

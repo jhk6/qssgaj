@@ -10,13 +10,11 @@
     background:#f0f2f5; color:#333; font-size:14px;
   }
 
-  /* 顶部条 */
   .topbar { background:#16263c; color:#a8bcd4; font-size:12px; padding:6px 0; }
   .topbar .inner { max-width:1200px; margin:0 auto; padding:0 20px; display:flex; justify-content:space-between; }
   .topbar a { color:#a8bcd4; text-decoration:none; margin-left:16px; }
   .topbar a:hover { color:#fff; }
 
-  /* 页头 */
   header {
     background:linear-gradient(135deg,#0b2245 0%,#143a6b 55%,#1d5091 100%);
     color:#fff; position:relative; overflow:hidden;
@@ -37,27 +35,23 @@
   .header-right { margin-left:auto; text-align:right; font-size:12px; color:#9dc0ea; line-height:1.9; position:relative; z-index:2; }
   .header-right strong { color:#ffd76e; font-size:15px; }
 
-  /* 导航 */
   nav { background:#0f2a4d; border-top:1px solid rgba(255,255,255,.1); position:sticky; top:0; z-index:50; box-shadow:0 2px 10px rgba(0,0,0,.15); }
   nav .inner { max-width:1200px; margin:0 auto; padding:0 20px; display:flex; }
   nav a { color:#d6e4f5; text-decoration:none; padding:15px 26px; font-size:15px; position:relative; transition:.2s; }
   nav a:hover, nav a.active { background:#1d5091; color:#fff; }
   nav a.active::after { content:""; position:absolute; left:26px; right:26px; bottom:0; height:3px; background:#ffd76e; }
 
-  /* 面包屑 */
   .crumb { max-width:1000px; margin:14px auto 0; padding:0 20px; font-size:12px; color:#8a97a8; }
   .crumb a { color:#8a97a8; text-decoration:none; }
   .crumb a:hover { color:#1d5091; }
   .crumb span { margin:0 6px; }
 
-  /* 主容器 */
   .wrap { max-width:1000px; margin:0 auto; padding:16px 20px 50px; }
   .card { background:#fff; border:1px solid #e3e8ef; border-radius:4px; box-shadow:0 1px 4px rgba(0,0,0,.04); margin-bottom:18px; }
   .card-head { padding:14px 20px; border-bottom:1px solid #eef1f6; display:flex; align-items:center; justify-content:space-between; }
   .card-head h2 { font-size:17px; font-weight:600; color:#143a6b; padding-left:12px; position:relative; }
   .card-head h2::before { content:""; position:absolute; left:0; top:50%; transform:translateY(-50%); width:4px; height:16px; background:#1d5091; border-radius:2px; }
 
-  /* 查询表单 */
   .tabs { display:flex; border-bottom:1px solid #eef1f6; background:#fafbfd; }
   .tabs button { flex:0 0 auto; border:none; background:transparent; padding:14px 32px; font-size:14px; font-family:inherit; color:#6b7a8d; cursor:pointer; position:relative; transition:.2s; }
   .tabs button:hover { color:#1d5091; }
@@ -91,7 +85,6 @@
   .tip-box { margin:0 32px 24px; padding:12px 16px; background:#fffbf0; border:1px dashed #e6c96a; border-radius:3px; font-size:12px; color:#8a6d1f; line-height:1.9; }
   .tip-box b { color:#b8860b; }
 
-  /* 结果区 */
   #resultArea { display:none; }
   .case-card { border:1px solid #e3e8ef; border-radius:4px; margin:0 0 18px; overflow:hidden; }
   .case-card:last-child { margin-bottom:0; }
@@ -120,7 +113,45 @@
   .tl-desc { font-size:13px; color:#6b7a8d; line-height:1.75; }
   .tl-item.current .tl-title { color:#b8860b; }
 
-  /* 进度中的附件链接 */
+  /* ★ 承办人备注 */
+  .tl-desc .note-label {
+    display:inline-block;
+    margin-top:10px;
+    margin-bottom:4px;
+    font-size:11.5px;
+    padding:2px 8px;
+    background:#fff5e0;
+    color:#b8860b;
+    border-radius:2px;
+    border:1px solid #e6c96a;
+    letter-spacing:1px;
+    font-weight:600;
+    font-family:"Microsoft YaHei",sans-serif;
+  }
+  .tl-desc .note-body {
+    display:block;
+    margin-top:6px;
+    padding:10px 14px;
+    background:#fffbf0;
+    border-left:3px solid #d4a24a;
+    border-radius:0 3px 3px 0;
+    font-size:12.5px;
+    color:#7a5a1f;
+    line-height:1.9;
+    font-family:"SimSun","Songti SC",serif;
+    white-space:pre-line;
+  }
+  .tl-desc .note-sign {
+    display:block;
+    margin-top:8px;
+    text-align:right;
+    font-size:12.5px;
+    color:#8a6d1f;
+    font-family:"Kaiti SC","KaiTi",cursive,serif;
+    font-style:italic;
+    letter-spacing:1px;
+  }
+
   .tl-link { margin-top:9px; }
   .tl-link a {
     display:inline-flex; align-items:center; gap:6px;
@@ -149,7 +180,6 @@
   .result-bar { padding:10px 20px; background:#eef5fd; border-bottom:1px solid #dbe7f5; font-size:13px; color:#1d5091; }
   .result-bar b { color:#143a6b; }
 
-  /* 页脚 */
   footer { background:#0f2136; color:#7d92ab; font-size:12px; padding:26px 0 20px; border-top:3px solid #1d5091; }
   .footer-inner { max-width:1200px; margin:0 auto; padding:0 20px; }
   .footer-links { display:flex; flex-wrap:wrap; gap:8px 22px; padding-bottom:14px; margin-bottom:14px; border-bottom:1px solid rgba(255,255,255,.08); }
@@ -169,7 +199,6 @@
 </head>
 <body>
 
-<!-- 顶部条 -->
 <div class="topbar">
   <div class="inner">
     <div>青山市公安局 · 官方网站（政务类）</div>
@@ -182,7 +211,6 @@
   </div>
 </div>
 
-<!-- 页头 -->
 <header>
   <div class="header-inner">
     <div class="emblem">🛡</div>
@@ -197,7 +225,6 @@
   </div>
 </header>
 
-<!-- 导航 -->
 <nav>
   <div class="inner">
     <a href="index.html">首页</a>
@@ -210,14 +237,12 @@
   </div>
 </nav>
 
-<!-- 面包屑 -->
 <div class="crumb">
   <a href="index.html">首页</a><span>&gt;</span>
   <a href="#">办事服务</a><span>&gt;</span>
   案件进度查询
 </div>
 
-<!-- 主体 -->
 <div class="wrap">
 
   <div class="card">
@@ -226,13 +251,11 @@
       <span style="font-size:12px;color:#a0adbd;">数据更新时间：2026-10-01 08:00</span>
     </div>
 
-    <!-- 查询方式切换 -->
     <div class="tabs">
       <button type="button" class="on" data-mode="no">按案件编号查询</button>
       <button type="button" data-mode="id">按身份证号查询</button>
     </div>
 
-    <!-- 表单 -->
     <div class="form-body">
       <div class="field">
         <label id="inputLabel">案件编号<em>*</em></label>
@@ -257,7 +280,6 @@
       <button type="button" class="btn-reset" id="btnReset">重 置</button>
     </div>
 
-    <!-- 演示提示（不包含新增案件及对应身份证号） -->
     <div class="tip-box">
       <b>【游戏内演示提示】</b>可用案件编号：
       <b>QS20260714001</b>（侦查中）、
@@ -267,12 +289,10 @@
     </div>
   </div>
 
-  <!-- 结果区 -->
   <div id="resultArea"></div>
 
 </div>
 
-<!-- 页脚 -->
 <footer>
   <div class="footer-inner">
     <div class="footer-links">
@@ -334,7 +354,7 @@ const CASES = [
     filed: "2026-06-01",
     idcards: ["330102199003074512"],
     progress: [
-      { date:"2026-06-01 08:40", title:"受理报案", desc:"被害人报案称在网上被以“刷单返利”名义骗取资金。" },
+      { date:"2026-06-01 08:40", title:"受理报案", desc:"被害人报案称在网上被以「刷单返利」名义骗取资金。" },
       { date:"2026-06-03 14:20", title:"立案侦查", desc:"经资金流向分析，依法立案并成立专案组。" },
       { date:"2026-06-18 20:10", title:"抓获犯罪嫌疑人", desc:"专案组在外省抓获涉案嫌疑人 6 名，冻结涉案账户 21 个。" },
       { date:"2026-07-05 16:00", title:"侦查终结", desc:"案件事实清楚、证据确实充分，侦查终结并制作起诉意见书。" },
@@ -360,7 +380,6 @@ const CASES = [
       { date:"2026-04-30 11:00", title:"案件办结", desc:"调解协议履行完毕，案件依法办结并归档。" }
     ]
   },
-  /* ===== 青山市实验中学打架斗殴案（可通过 976676200909051234 查询） ===== */
   {
     id: "QS20251113004",
     no: "青公（刑）诉字〔2025〕第 1107 号",
@@ -385,7 +404,6 @@ const CASES = [
       }
     ]
   },
-  /* ===== 青山市实验中学非正常死亡案（可通过 976676200909051234 查询） ===== */
   {
     id: "QS20260923001",
     no: "青公（刑）非死字〔2026〕第 0923 号",
@@ -402,7 +420,16 @@ const CASES = [
       { date:"2026-09-23 07:06", title:"受理报案", desc:"群众报警称在学校仓库发现有人自杀。" },
       { date:"2026-09-23 07:30", title:"调查取证", desc:"刑警到达现场取证。" },
       { date:"2026-09-23 10:40", title:"整理证据", desc:"刑侦大队整理现有证据。" },
-      { date:"2026-09-23 11:00", title:"案件办结", desc:"检测出两位死者常某某和高某某血液内酒精浓度过高，判断其自杀之前大量饮酒导致醉酒，鉴于其有严重的心理问题，最终判定为自杀。" }
+      {
+        date:"2026-09-23 11:00",
+        title:"案件办结",
+        desc:"检测出两位死者常某某和高某某血液内酒精浓度过高，判断其自杀之前大量饮酒导致醉酒，鉴于其有严重的心理问题，最终判定为自杀。",
+        note: {
+          label: "承办人备注",
+          body: "现场勘查存在疑点，已另附材料报上级部门。",
+          sign: "—— 张乔晞"
+        }
+      }
     ]
   }
 ];
@@ -460,10 +487,17 @@ function renderCase(c) {
     const linkHtml = p.link
       ? `<div class="tl-link"><a href="${esc(p.link.url)}" target="_blank" rel="noopener">${esc(p.link.text)}</a></div>`
       : "";
+
+    const noteHtml = p.note
+      ? `<span class="note-label">${esc(p.note.label)}</span>
+         <span class="note-body">${esc(p.note.body)}</span>
+         <span class="note-sign">${esc(p.note.sign)}</span>`
+      : "";
+
     return `<div class="tl-item${isLast ? " current" : ""}">
       <div class="tl-date">${esc(p.date)}</div>
       <div class="tl-title">${esc(p.title)}</div>
-      <div class="tl-desc">${esc(p.desc)}${linkHtml}</div>
+      <div class="tl-desc">${esc(p.desc)}${noteHtml}${linkHtml}</div>
     </div>`;
   }).join("");
 
@@ -497,7 +531,6 @@ function showEmpty(title, desc) {
   </div></div>`;
 }
 
-/* ============ 查询逻辑 ============ */
 function doSearch() {
   const area = document.getElementById("resultArea");
   const input = document.getElementById("queryInput");
@@ -573,7 +606,6 @@ function doSearch() {
   }, 700);
 }
 
-/* ============ 事件绑定 ============ */
 document.getElementById("captchaBox").addEventListener("click", refreshCaptcha);
 document.getElementById("btnSearch").addEventListener("click", doSearch);
 
@@ -594,8 +626,17 @@ document.getElementById("captchaInput").addEventListener("keydown", e => {
   if (e.key === "Enter") doSearch();
 });
 
-/* 初始化 */
 refreshCaptcha();
 </script>
+<script>
+(function(){
+  try{
+    var all = JSON.parse(localStorage.getItem('qs_clues') || '{}');
+    all['visited_case'] = 1;
+    localStorage.setItem('qs_clues', JSON.stringify(all));
+  }catch(e){}
+})();
+</script>
+
 </body>
 </html>
